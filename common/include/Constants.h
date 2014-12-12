@@ -42,7 +42,7 @@ LIMACORE_API std::ostream& operator <<(std::ostream& os, AlignDir align_dir);
 enum ImageType {
 	Bpp8, Bpp8S, Bpp10, Bpp10S, Bpp12, Bpp12S, Bpp14, Bpp14S, 
 	Bpp16, Bpp16S, Bpp32, Bpp32S,
-	Bpp32F //- ie: FLOAT
+	Bpp32F
 };
 
 LIMACORE_API std::ostream& operator <<(std::ostream& os, ImageType image_type);
@@ -104,8 +104,6 @@ LIMACORE_API DetStatus& operator |=(DetStatus& s1, DetStatus  s2);
 
 LIMACORE_API std::ostream& operator <<(std::ostream& os, DetStatus det_status);
 
-//- workaround for the conflict with Tango (could impact Tango device ?)
-#undef RGB24
 enum VideoMode {Y8,Y16,Y32,Y64,
 		RGB555,RGB565,
 		RGB24,RGB32,
