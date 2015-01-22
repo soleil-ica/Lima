@@ -121,3 +121,9 @@
 [submodule "camera/eiger"]
 	path = camera/eiger
 	url = git://github.com/soleil-ica/Lima-camera-eiger.git
+[submodule "applications/tango_xpix_v1"]
+	path = applications/tango_xpix_v1
+	url = git@github.com:soleil-ica/Lima-tango.git
+[submodule "camera/xpad_v1"]
+	path = camera/xpad_v1
+	url = git@github.com:soleil-ica/Lima-camera-xpad.git
