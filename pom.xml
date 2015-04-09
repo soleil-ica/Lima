@@ -31,6 +31,7 @@
     </dependencies>
 	
     <profiles>
+    
         <profile>
             <id>Lima_linux</id>
             <activation>
@@ -39,12 +40,10 @@
                 </os>
             </activation>
             <dependencies>
-                <!-- For Nexus Saving -->
                 <dependency>
                     <groupId>fr.soleil.lib</groupId>
                     <artifactId>YAT-${aol}-static-${mode}</artifactId>
                 </dependency>
-
                            
                 <dependency>
                     <groupId>fr.soleil.lib</groupId>
@@ -58,6 +57,7 @@
                 </dependency>
             </dependencies>
         </profile>
+       
         <profile>
             <id>Lima_windows</id>
             <activation>
@@ -67,24 +67,24 @@
             </activation>
             <dependencies>
                 <!-- For Nexus Saving -->
+
+                <dependency>
+                    <groupId>fr.soleil.lib</groupId>
+                    <artifactId>NexusCPP-${aol}-static-${mode}</artifactId>
+                    <version>3.0.5-SNAPSHOT</version>
+                </dependency>
+                        
+                <dependency>
+                    <groupId>ncsa.uiuc.edu</groupId>
+                    <artifactId>HDF5-${aol}-shared-${mode}</artifactId>
+                    <version>1.8.13-vc9</version>
+                </dependency>
+                     
                 <dependency>
                     <groupId>fr.soleil.lib</groupId>
                     <artifactId>YAT-${aol}-static-${mode}</artifactId>
-                    <version>1.9.6-vc9</version>
-                </dependency>
-            
-                <dependency>
-                    <groupId>fr.soleil.lib</groupId>
-                    <artifactId>NexusCPP-${aol}-shared-${mode}</artifactId>
-                    <version>3.0.0-vc9</version>
-                </dependency>
-            
-                <dependency>
-                    <groupId>ncsa.uiuc.edu</groupId>
-                    <artifactId>HDF5-${aol}-shared-release</artifactId>
-                    <version>1.8.13-vc9</version>
-                </dependency>
-                            
+                    <version>1.9.13-SNAPSHOT</version>
+                </dependency>                            
             </dependencies>
         </profile>
     </profiles>
@@ -118,9 +118,12 @@
                             <exclude>control/src/CtSaving_Tiff.cpp</exclude>
                             <exclude>control/src/CtSpsImage.cpp</exclude>
                             <exclude>control/src/CtSaving_Hdf5.cpp</exclude>
+                            <!--<exclude>control/src/CtSaving_Nxs.cpp</exclude>-->
+                            <exclude>camera/pilatus/doc/camera_sirius.def</exclude>                            
                         </excludes>
                         <defines>
                             <define>WITH_NXS_SAVING</define>
+                            <!--                            <define>WITH_CBF_SAVING</define>-->
                         </defines>
                     </cpp>
                                     
