@@ -133,3 +133,6 @@
 [submodule "camera/pilatus_v3"]
 	path = camera/pilatus_v3
 	url = git@github.com:soleil-ica/Lima-camera-pilatus
+[submodule "camera/merlin"]
+	path = camera/merlin
+	url = git@github.com:soleil-ica/Lima-camera-merlin
