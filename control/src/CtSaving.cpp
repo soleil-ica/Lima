@@ -32,10 +32,10 @@
 #include <direct.h>
 #endif
 
-#include "CtSaving.h"
+#include "lima/CtSaving.h"
 #include "CtSaving_Edf.h"
-#include "CtAcquisition.h"
-#include "CtBuffer.h"
+#include "lima/CtAcquisition.h"
+#include "lima/CtBuffer.h"
 
 #ifdef WITH_NXS_SAVING
 #include "CtSaving_Nxs.h"
@@ -57,8 +57,8 @@
 #include "CtSaving_Hdf5.h"
 #endif
 
-#include "TaskMgr.h"
-#include "SinkTask.h"
+#include "processlib/TaskMgr.h"
+#include "processlib/SinkTask.h"
 
 using namespace lima;
 
@@ -324,8 +324,15 @@ void CtSaving::Stream::createSaveContainer()
                                      "saving option, not managed";
 #endif
     goto common;
+  case EDFConcat:
+#ifndef __unix
+    THROW_CTL_ERROR(NotSupported) << "Lima is not compiled with the edf concat "
+                                     "saving option, not managed";
+#endif
+    goto common;
   case RAW:
   case EDF:
+
 
   common:
     if (m_save_cnt) {
@@ -343,6 +350,7 @@ void CtSaving::Stream::createSaveContainer()
   case RAW:
   case EDF:
   case EDFGZ:
+  case EDFConcat:
     m_save_cnt = new SaveContainerEdf(*this,m_pars.fileFormat);
     break;
 #ifdef WITH_CBF_SAVING
@@ -912,7 +920,7 @@ void CtSaving::setFramesPerFile(unsigned long frames_per_file, int stream_idx)
 }
 /** @brief get the number of frame saved per file for a saving stream
  */
-void CtSaving::getFramePerFile(unsigned long& frames_per_file, 
+void CtSaving::getFramesPerFile(unsigned long& frames_per_file, 
 			       int stream_idx) const
 {
   DEB_MEMBER_FUNCT();
@@ -1681,6 +1689,7 @@ void CtSaving::_prepare(CtControl& ct)
       m_hwsaving->setOptions(params.options);
       m_hwsaving->setNextNumber(params.nextNumber);
       m_hwsaving->setIndexFormat(params.indexFormat);
+      m_hwsaving->setOverwritePolicy(convert_2_string(params.overwritePolicy));
       std::string fileFormat;
       switch(params.fileFormat)
 	{
