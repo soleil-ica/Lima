@@ -123,19 +123,19 @@
 	url = git://github.com/soleil-ica/Lima-camera-eiger.git
 [submodule "applications/tango_xpix_v1"]
 	path = applications/tango_xpix_v1
-	url = git@github.com:soleil-ica/Lima-tango.git
+	url = git://github.com/soleil-ica/Lima-tango.git
 [submodule "camera/xpad_v1"]
 	path = camera/xpad_v1
-	url = git@github.com:soleil-ica/Lima-camera-xpad.git
+	url = git://github.com/soleil-ica/Lima-camera-xpad.git
 [submodule "camera/pilatus_v1"]
 	path = camera/pilatus_v1
-	url = git@github.com:soleil-ica/Lima-camera-pilatus
+	url = git://github.com/soleil-ica/Lima-camera-pilatus
 [submodule "camera/pilatus_v3"]
 	path = camera/pilatus_v3
-	url = git@github.com:soleil-ica/Lima-camera-pilatus
+	url = git://github.com/soleil-ica/Lima-camera-pilatus
 [submodule "camera/merlin"]
 	path = camera/merlin
-	url = git@github.com:soleil-ica/Lima-camera-merlin
+	url = git://github.com/soleil-ica/Lima-camera-merlin
 [submodule "camera/mythen3"]
 	path = camera/mythen3
 	url = git://github.com/esrf-bliss/Lima-camera-mythen3
