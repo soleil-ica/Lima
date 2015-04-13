@@ -136,3 +136,6 @@
 [submodule "camera/merlin"]
 	path = camera/merlin
 	url = git@github.com:soleil-ica/Lima-camera-merlin
+[submodule "camera/mythen3"]
+	path = camera/mythen3
+	url = git://github.com/esrf-bliss/Lima-camera-mythen3
