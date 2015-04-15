@@ -36,7 +36,6 @@ def set_project_dir(sub_dir):
 #------------------------------------------------------------------------------
 # Copy library
 #------------------------------------------------------------------------------
-
 def copy_file_ext(from_path, to_path, file_ext):
 
   if not os.path.isdir(to_path):
@@ -192,7 +191,7 @@ if __name__ == "__main__":
   for cam in camera_list:
     cams_string += cam + "|"
   help_string = "module to compile (possible values are: all|processlib|lima|cameras|"+ cams_string+ "|device||cleanall)"
-  parser.add_argument("module", help=help_string)
+  parser.add_argument("modules",nargs = '*', help=help_string)
   parser.add_argument("-o","--offline", help="mvn will be offline",action="store_true")
   parser.add_argument("-f","--pomfile", help="name of the pom file(for the Tango device only)")
   parser.add_argument("-q","--quiet", help="mvn will be quiet", action="store_true")
@@ -200,7 +199,7 @@ if __name__ == "__main__":
   parser.add_argument("-d","--directory", help="automatically install Lima binaries into the specified installation directory")
 
   args = parser.parse_args()
-
+  
   maven_options = ""
   # manage command line option  
   if args.offline:
@@ -226,51 +225,52 @@ if __name__ == "__main__":
   maven_clean_install   = "mvn clean install -DenableCheckRelease=false"
   maven_clean           = "mvn clean"
   current_dir           = os.getcwd()
+  
+  for target in args.modules:
+	  try:
+		# Build all
+		if target == 'all':
+			print 'BUILD ALL\n'
+			build_plugin('third-party/Processlib', target_path)
+			build_lima_core(target_path)
+			build_all_camera(target_path)
+			build_device(target_path)
+		# Build processlib
+		elif target == 'processlib':
+			print 'BUILD ProcessLib\n'
+			build_plugin('third-party/Processlib', target_path)
+		# Build device
+		elif target == 'device':
+			print 'BUILD Device\n'
+			build_device(target_path)
+		# Build lima
+		elif target == 'lima':
+			print 'BUILD Lima Core\n'
+			build_lima_core(target_path)
+		# Build cameras
+		elif target == 'cameras':
+			print 'BUILD All ',platform,' Cameras\n'
+			build_all_camera(target_path)
+		# Clean all
+		elif target =='cleanall':
+			clean_all()
+		# Build cam
+		else:
+			for cam in camera_list:
+				if target == cam:
+					build_plugin('camera/'+cam, target_path)
+					break
 
-  try:
-    # Build all
-    if args.module == 'all':
-        print 'BUILD ALL\n'
-        build_plugin('third-party/Processlib', target_path)
-        build_lima_core(target_path)
-        build_all_camera(target_path)
-        build_device(target_path)
-    # Build processlib
-    elif args.module == 'processlib':
-        print 'BUILD ProcessLib\n'
-        build_plugin('third-party/Processlib', target_path)
-    # Build device
-    elif args.module == 'device':
-        print 'BUILD Device\n'
-        build_device(target_path)
-    # Build lima
-    elif args.module == 'lima':
-        print 'BUILD Lima Core\n'
-        build_lima_core(target_path)
-    # Build cameras
-    elif args.module == 'cameras':
-        print 'BUILD All ',platform,' Cameras\n'
-        build_all_camera(target_path)
-    # Clean all
-    elif args.module =='cleanall':
-        clean_all()
-    # Build cam
-    else:
-        for cam in camera_list:
-            if args.module == cam:
-                build_plugin('camera/'+cam, target_path)
-                break
+		# display list of copied files, if -d option is used
+		if args.directory:
+			print '\n'
+			print '============================================='
+			print 'Modules are compiled & copied as shown below:'
+			print '============================================='
+			for file in copied_files:
+				print '- ',file
+			print '\n'
 
-    # display list of copied files, if -d option is used
-    if args.directory:
-        print '\n'
-        print '============================================='
-        print 'Modules are compiled & copied as shown below:'
-        print '============================================='
-        for file in copied_files:
-            print '- ',file
-        print '\n'
-
-  except BuildError, e:
-    sys.stderr.write("!!!   BUILD FAILED    !!!\n")
+	  except BuildError, e:
+		sys.stderr.write("!!!   BUILD FAILED    !!!\n")
 
