@@ -190,7 +190,7 @@ if __name__ == "__main__":
   cams_string = ""
   for cam in camera_list:
     cams_string += cam + "|"
-  help_string = "module to compile (possible values are: all|processlib|lima|cameras|"+ cams_string+ "|device||cleanall)"
+  help_string = "modules to compile (several modules are possible: all|processlib|lima|cameras|"+ cams_string+ "|device||cleanall)"
   parser.add_argument("modules",nargs = '*', help=help_string)
   parser.add_argument("-o","--offline", help="mvn will be offline",action="store_true")
   parser.add_argument("-f","--pomfile", help="name of the pom file(for the Tango device only)")
