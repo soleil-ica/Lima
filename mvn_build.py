@@ -8,8 +8,8 @@
 #
 # Author: FL / AN (Hacked from S. Poirier)
 
-from multiprocessing import Pool
 from argparse import ArgumentParser
+from multiprocessing import Pool
 
 import os
 import sys
