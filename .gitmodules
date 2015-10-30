@@ -118,9 +118,6 @@
 [submodule "third-party/hdf5"]
 	path = third-party/hdf5
 	url = git://github.com/esrf-bliss/hdf5.git
-[submodule "camera/eiger"]
-	path = camera/eiger
-	url = git://github.com/soleil-ica/Lima-camera-eiger.git
 [submodule "camera/merlin"]
 	path = camera/merlin
 	url = git://github.com/soleil-ica/Lima-camera-merlin
