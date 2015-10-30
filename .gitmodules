@@ -124,3 +124,6 @@
 [submodule "camera/mythen3"]
 	path = camera/mythen3
 	url = git://github.com/esrf-bliss/Lima-camera-mythen3
+[submodule "camera/eiger"]
+	path = camera/eiger
+	url = git@github.com:soleil-ica/Lima-camera-eiger
