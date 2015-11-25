@@ -19,9 +19,6 @@
 [submodule "camera/pilatus"]
 	path = camera/pilatus
 	url = git://github.com/soleil-ica/Lima-camera-pilatus
-[submodule "applications/tango"]
-	path = applications/tango
-	url = git://github.com/soleil-ica/Lima-tango
 [submodule "camera/maxipix"]
 	path = camera/maxipix
 	url = git://github.com/esrf-bliss/Lima-camera-maxipix
