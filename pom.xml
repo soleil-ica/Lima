@@ -42,12 +42,12 @@
             <dependencies>
                 <dependency>
                     <groupId>fr.soleil.lib</groupId>
-                    <artifactId>YAT-${aol}-static-${mode}</artifactId>
+                    <artifactId>YAT-${aol}-shared-${mode}</artifactId>
                 </dependency>
                            
                 <dependency>
                     <groupId>fr.soleil.lib</groupId>
-                    <artifactId>NexusCPP-${aol}-static-${mode}</artifactId>
+                    <artifactId>NexusCPP-${aol}-shared-${mode}</artifactId>
                 </dependency>
             
                 <dependency>
