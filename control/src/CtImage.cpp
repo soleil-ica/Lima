@@ -712,10 +712,13 @@ void CtImage::setRoi(Roi& roi)
 	DEB_MEMBER_FUNCT();
 	DEB_PARAM() << DEB_VAR1(roi);
 
-	if (roi.isEmpty()) {
-		resetRoi();
-		return;
-	}
+	Bin bin; 
+    getBin(bin);
+	Roi fullRoi(Point(0,0),m_max_size / bin);
+	if (roi.isEmpty() || roi == fullRoi) {
+ 		resetRoi();
+ 		return;
+ 	}
 
 	switch (m_mode) {
 		case SoftOnly:
