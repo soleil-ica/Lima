@@ -76,14 +76,14 @@ def clean_all():
     set_project_dir('third-party/Processlib');clean()
     for cam in camera_list:
         set_project_dir('camera/'+ cam);clean()
-    set_project_dir('applications/tango/LimaDetector');clean()
+    set_project_dir('applications/tango/cpp');clean()
 
 #------------------------------------------------------------------------------
 # build the LimaDetector device
 #------------------------------------------------------------------------------
 def build_device(target_path):
   print 'Build Device LimaDetector\n'
-  set_project_dir('applications/tango/LimaDetector')
+  set_project_dir('applications/tango/cpp')
 
   print "Maven command = ", maven_clean_install + maven_platform_options + maven_options
   rc = os.system(maven_clean_install + maven_platform_options + maven_options)
