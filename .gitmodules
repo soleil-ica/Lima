@@ -130,3 +130,6 @@
 [submodule "applications/tango/cpp"]
 	path = applications/tango/cpp
 	url = git@github.com:soleil-ica/Lima-tango-cpp
+[submodule "applications/tango/python"]
+	path = applications/tango/python
+	url = git://github.com/esrf-bliss/Lima-tango-python

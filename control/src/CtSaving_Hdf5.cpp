@@ -28,6 +28,10 @@
 #include "lima/HwInterface.h"
 #include "lima/HwCap.h"
 
+#if defined(WIN32)
+typedef unsigned char u_int8_t;
+#endif
+
 using namespace lima;
 using namespace H5;
 using namespace std;

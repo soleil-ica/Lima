@@ -9,7 +9,7 @@
 
     <groupId>fr.soleil.lib</groupId>
     <artifactId>LimaCore-${aol}-shared-${mode}</artifactId>
-    <version>1.3.5</version>
+    <version>1.5.5</version>
 
     <packaging>nar</packaging>
     <name>LimaCore</name>
@@ -26,7 +26,7 @@
         <dependency>
             <groupId>fr.soleil.lib</groupId>
             <artifactId>LimaProcesslib-${aol}-shared-${mode}</artifactId>
-            <version>1.3.2</version>
+            <version>1.3.3</version>
         </dependency>
     </dependencies>
 	
@@ -42,12 +42,12 @@
             <dependencies>
                 <dependency>
                     <groupId>fr.soleil.lib</groupId>
-                    <artifactId>YAT-${aol}-static-${mode}</artifactId>
+                    <artifactId>YAT-${aol}-shared-${mode}</artifactId>
                 </dependency>
                            
                 <dependency>
                     <groupId>fr.soleil.lib</groupId>
-                    <artifactId>NexusCPP-${aol}-static-${mode}</artifactId>
+                    <artifactId>NexusCPP-${aol}-shared-${mode}</artifactId>
                 </dependency>
             
                 <dependency>
@@ -117,13 +117,13 @@
                             <exclude>control/src/CtSaving_Fits.cpp</exclude>
                             <exclude>control/src/CtSaving_Tiff.cpp</exclude>
                             <exclude>control/src/CtSpsImage.cpp</exclude>
-                            <exclude>control/src/CtSaving_Hdf5.cpp</exclude>
+                            <!--<exclude>control/src/CtSaving_Hdf5.cpp</exclude>-->
                             <!--<exclude>control/src/CtSaving_Nxs.cpp</exclude>-->
                             <exclude>camera/pilatus/doc/camera_sirius.def</exclude>                            
                         </excludes>
                         <defines>
                             <define>WITH_NXS_SAVING</define>
-                            <!--                            <define>WITH_CBF_SAVING</define>-->
+                            <define>WITH_HDF5_SAVING</define>
                         </defines>
                     </cpp>
                                     

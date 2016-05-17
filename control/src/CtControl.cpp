@@ -575,21 +575,9 @@ void CtControl::getStatus(Status& status) const
   m_hw->getStatus(aHwStatus);
   DEB_TRACE() << DEB_VAR1(aHwStatus);
   if(aHwStatus.acq == AcqFault)
-  {
     status.AcquisitionStatus = AcqFault;
-  }
-  else if(aHwStatus.acq == AcqReady)
-  {
-    status.AcquisitionStatus =AcqReady;
-  }  
-  else if(aHwStatus.acq == AcqRunning)
-  {
-    status.AcquisitionStatus =AcqRunning;
-  }
-  else if(aHwStatus.acq == AcqConfig)
-  {
-    status.AcquisitionStatus =AcqConfig;
-  }  
+  else if(status.AcquisitionStatus == AcqReady)
+    status.AcquisitionStatus = aHwStatus.acq;
 }
 
 /** @brief aborts an acquisiton from a callback thread: it's safe to call 
@@ -653,9 +641,7 @@ void CtControl::_calcAcqStatus()
 		m_status.AcquisitionStatus = AcqReady;
 	    }
 	  else
-      {
 	    m_status.AcquisitionStatus = AcqReady;
-      }
 	  DEB_TRACE() << DEB_VAR1(m_status);
 	}
 
