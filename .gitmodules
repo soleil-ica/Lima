@@ -127,3 +127,6 @@
 [submodule "camera/v4l2"]
 	path = camera/v4l2
 	url = git://github.com/esrf-bliss/Lima-camera-v4l2
+[submodule "applications/tango/cpp"]
+	path = applications/tango/cpp
+	url = git@github.com:soleil-ica/Lima-tango-cpp
