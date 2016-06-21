@@ -38,7 +38,7 @@ class LIMACORE_API HwInterface
 	typedef std::vector<HwCap> CapList;
 
 	typedef struct Status {
-	  enum Basic {Ready,Exposure,Readout,Latency,Config, Fault};
+	  enum Basic {Fault,Ready,Exposure,Readout,Latency,Config};
 	  inline void set(Basic);
 
 		AcqStatus acq;
@@ -111,8 +111,8 @@ void HwInterface::StatusType::set(HwInterface::StatusType::Basic basic_status)
       acq = AcqRunning;
       break;
     case HwInterface::StatusType::Fault:
-      acq = AcqFault;
       det = DetFault;
+      acq = AcqFault;
       break;      
     }
   det_mask = DetExposure | DetReadout | DetLatency;
