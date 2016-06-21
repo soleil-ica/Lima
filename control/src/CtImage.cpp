@@ -711,10 +711,11 @@ void CtImage::setRoi(Roi& roi)
 {
 	DEB_MEMBER_FUNCT();
 	DEB_PARAM() << DEB_VAR1(roi);
-
-	Bin bin; 
-    getBin(bin);
-	Roi fullRoi(Point(0,0),m_max_size / bin);
+	Bin bin; getBin(bin);
+	Size full_size = m_max_size / bin;
+	Roi fullRoi(Point(0,0),full_size);
+	RotationMode aRotation = m_sw->getRotation();
+	fullRoi = fullRoi.getRotated(aRotation,full_size);
 	if (roi.isEmpty() || roi == fullRoi) {
  		resetRoi();
  		return;

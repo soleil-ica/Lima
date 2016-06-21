@@ -19,6 +19,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, see <http://www.gnu.org/licenses/>.
 //###########################################################################
+#define _FILE_OFFSET_BITS 64
 #include <cmath>
 #include <sstream>
 #include <sys/types.h>
@@ -167,6 +168,8 @@ void CtSaving::Parameters::checkValid() const
 	THROW_CTL_ERROR(InvalidValue) << "CBF file format does not support "
 			                 "multi frame per file";
       break;
+#endif
+#ifdef WITH_TIFF_SAVING
     case TIFFFormat :
       if(framesPerFile > 1)
 	THROW_CTL_ERROR(InvalidValue) << "TIFF file format does not support "
@@ -312,6 +315,12 @@ void CtSaving::Stream::createSaveContainer()
                                      "saving option, not managed"; 
 #endif
     goto common;
+  case EDFLZ4:
+#ifndef WITH_EDFLZ4_SAVING
+    THROW_CTL_ERROR(NotSupported) << "Lima is not compiled with the edf lz4 "
+                                     "saving option, not managed"; 
+#endif
+    goto common;
   case TIFFFormat:
 #ifndef WITH_TIFF_SAVING
     THROW_CTL_ERROR(NotSupported) << "Lima is not compiled with the tiff "
@@ -350,6 +359,7 @@ void CtSaving::Stream::createSaveContainer()
   case RAW:
   case EDF:
   case EDFGZ:
+  case EDFLZ4:
   case EDFConcat:
     m_save_cnt = new SaveContainerEdf(*this,m_pars.fileFormat);
     break;
@@ -2006,7 +2016,7 @@ void CtSaving::Stream::checkWriteAccess()
       struct stat aDirectoryStat;
       if(stat(m_pars.directory.c_str(),&aDirectoryStat))
 	{
-	  output = "Can stat directory : " + m_pars.directory;
+	  output = "Can't stat directory : " + m_pars.directory;
 	  THROW_CTL_ERROR(Error) << output;
 	}
       DEB_TRACE() << "Check if it's really a directory";
@@ -2142,9 +2152,13 @@ void CtSaving::Stream::checkDirectoryAccess(const std::string& directory)
       size_t pos = local_directory.find_last_of("/");
 #endif
       size_t string_length = local_directory.size() - 1;
-      continue_flag = pos == string_length;
       if(pos != std::string::npos)
+	{
 	local_directory = local_directory.substr(0,pos);
+	  continue_flag = pos == string_length;
+	}
+	else
+	  continue_flag = false;
 	}
       while(continue_flag);
 
