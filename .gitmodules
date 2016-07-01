@@ -30,7 +30,7 @@
 	url = git://github.com/esrf-bliss/Lima-camera-frelon
 [submodule "camera/common/espia"]
 	path = camera/common/espia
-	url = git://github.com/esrf-bliss/Lima-camera-common-espia
+	url = git@github.com:soleil-ica/Lima-camera-common-espia
 [submodule "applications/taco"]
 	path = applications/taco
 	url = git://github.com/esrf-bliss/Lima-taco
