@@ -714,8 +714,8 @@ void CtImage::setRoi(Roi& roi)
 	Bin bin; getBin(bin);
 	Size full_size = m_max_size / bin;
 	Roi fullRoi(Point(0,0),full_size);
-	RotationMode aRotation = m_sw->getRotation();
-	fullRoi = fullRoi.getRotated(aRotation,full_size);
+    RotationMode aRotation = m_sw->getRotation();
+    fullRoi = fullRoi.getRotated(aRotation,full_size);
 	if (roi.isEmpty() || roi == fullRoi) {
  		resetRoi();
  		return;
@@ -1013,6 +1013,13 @@ void CtImage::getRoi(Roi& roi) const
 	} else {
 		roi= m_sw->getRoi();
 	}
+
+    if(roi.isEmpty())
+    {
+        FrameDim dim;
+        getImageDim(dim);
+        roi = Roi(Point(0,0),dim.getSize());
+    }
 
 	DEB_RETURN() << DEB_VAR1(roi);
 }
