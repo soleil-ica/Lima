@@ -1,9 +1,9 @@
 [submodule "third-party/CBFLib"]
 	path = third-party/CBFLib
-	url = git://git.epn-campus.eu/repositories/CBFlib.git
+	url = git://github.com/esrf-bliss/cbflib.git
 [submodule "third-party/Sps"]
 	path = third-party/Sps
-	url = git://git.epn-campus.eu/repositories/Sps.git
+	url = git://github.com/esrf-bliss/Sps.git
 [submodule "third-party/Processlib"]
 	path = third-party/Processlib
 	url = git://github.com/soleil-ica/Processlib.git
@@ -21,7 +21,7 @@
 	url = git://github.com/soleil-ica/Lima-camera-pilatus
 [submodule "camera/maxipix"]
 	path = camera/maxipix
-	url = git://github.com/esrf-bliss/Lima-camera-maxipix
+	url = git://github.com/soleil-ica/Lima-camera-maxipix
 [submodule "documentation"]
 	path = documentation
 	url = git://github.com/esrf-bliss/Lima-documentation
@@ -69,10 +69,10 @@
 	url = git://github.com/esrf-bliss/Lima-camera-photonicscience
 [submodule "third-party/CCfits"]
 	path = third-party/CCfits
-	url = git://git.epn-campus.eu/repositories/CCfits
+	url = git://github.com/esrf-bliss/CCfits
 [submodule "third-party/cfitsio"]
 	path = third-party/cfitsio
-	url = git://git.epn-campus.eu/repositories/cfitsio
+	url = git://github.com/esrf-bliss/cfitsio
 [submodule "camera/rayonixhs"]
 	path = camera/rayonixhs
 	url = git://github.com/esrf-bliss/Lima-camera-rayonixhs
