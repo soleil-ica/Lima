@@ -23,6 +23,9 @@
 #include "lima/CtAcquisition.h"
 #include "lima/CtBuffer.h"
 #include "processlib/SinkTask.h"
+#include <algorithm>
+using std::min;
+using std::max;
 #ifndef __unix
 #include "processlib/SinkTaskMgr.i"
 #endif
@@ -570,6 +573,18 @@ void CtAccumulation::prepare()
   m_saturated_images.clear();
   CtBuffer *buffer = m_ct.buffer();
   buffer->getNumber(m_buffers_size);
+  //Adjust number of acc image
+  CtImage *image = m_ct.image();
+  FrameDim image_dim;
+  image->getHwImageDim(image_dim);
+  int image_depth = image_dim.getDepth();
+  long max_nb_buffers;
+  buffer->getMaxNumber(max_nb_buffers);
+  max_nb_buffers = long(max_nb_buffers * double(image_depth) / sizeof(int));
+  if(m_pars.active) max_nb_buffers /= 2;
+  m_buffers_size = min(m_buffers_size,max_nb_buffers);
+  m_buffers_size = max(m_buffers_size,16L);
+
   CtAcquisition *acquisition = m_ct.acquisition();
   int acc_nframes;
   acquisition->getAccNbFrames(acc_nframes);
@@ -578,6 +593,7 @@ void CtAccumulation::prepare()
   m_calc_mgr->resizeHistory(m_buffers_size * acc_nframes);
   m_last_continue_flag = true;
   m_last_acc_frame_nb = -1;
+
 }
 /** @brief this is an internal call from CtBuffer in case of accumulation
  */

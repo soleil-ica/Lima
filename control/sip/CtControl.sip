@@ -127,6 +127,7 @@ using namespace lima;
     void prepareAcq();
     void startAcq();
     void stopAcq();
+    void abortAcq();
 
     void abortAcq(AcqStatus acq_status, CtControl::ErrorCode error_code, 
 		  Data &data, bool ctrl_mutex_locked=false);
@@ -167,6 +168,9 @@ using namespace lima;
     void unregisterImageStatusCallback(ImageStatusCallback& cb);
 
     void setReconstructionTask(LinkTask*);
+
+    void setPrepareTimeout(double timeout);
+    void getPrepareTimeout(double& timeout /Out/) const;
 
   protected:
     bool newFrameReady(Data& data);

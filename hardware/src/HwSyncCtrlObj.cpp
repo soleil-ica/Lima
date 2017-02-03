@@ -40,12 +40,12 @@ HwSyncCtrlObj::HwSyncCtrlObj()
     m_acq_mode(Single),
     m_valid_ranges_cb(NULL)
 {
-	DEB_CONSTRUCTOR();
+  DEB_CONSTRUCTOR();
 }
 
 HwSyncCtrlObj::~HwSyncCtrlObj()
 {
-	DEB_DESTRUCTOR();
+  DEB_DESTRUCTOR();
   if (m_valid_ranges_cb)
     unregisterValidRangesCallback(m_valid_ranges_cb);
 }

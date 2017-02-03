@@ -112,7 +112,8 @@ MemBuffer::MemBuffer(int size)
 	: m_size(0), m_ptr(NULL)
 {
 	alloc(size);
-	char* ptr = (char*)m_ptr;    
+	char* ptr = (char*)m_ptr;
+	
 #ifdef __unix
 	long page_size = sysconf(_SC_PAGESIZE);
 #ifdef __SSE2__

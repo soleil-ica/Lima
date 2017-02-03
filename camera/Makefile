@@ -19,6 +19,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, see <http://www.gnu.org/licenses/>.
 ############################################################################
+
+.NOTPARALLEL:
+
 sub-dirs = common
 
 include ../config.inc
@@ -222,6 +225,30 @@ endif
 
 ifneq ($(COMPILE_EIGER),0)
 sub-dirs += eiger
+endif
+
+ifndef COMPILE_DEXELA
+COMPILE_DEXELA = 0
+endif
+
+ifneq ($(COMPILE_DEXELA),0)
+sub-dirs += dexela
+endif
+
+ifndef COMPILE_PIXIRAD
+COMPILE_PIXIRAD = 0
+endif
+
+ifneq ($(COMPILE_PIXIRAD),0)
+sub-dirs += pixirad
+endif
+
+ifndef COMPILE_HEXITEC
+COMPILE_HEXITEC = 0
+endif
+
+ifneq ($(COMPILE_HEXITEC),0)
+sub-dirs += hexitec
 endif
 
 include ../global.inc

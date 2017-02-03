@@ -217,7 +217,6 @@ AVIEX_FULL_VERSION = $(shell cat camera/aviex/VERSION)
 INSTALL_AVIEX_VDIR = $(INSTALL_AVIEX_DIR)/v$(AVIEX_FULL_VERSION)
 endif
 
-
 ifneq ($(COMPILE_META), 0)
 INSTALL_META_DIR = $(INSTALL_PLAT_DIR)/Meta
 META_FULL_VERSION = $(shell cat camera/common/meta/VERSION)
@@ -240,6 +239,24 @@ ifneq ($(COMPILE_EIGER), 0)
 INSTALL_EIGER_DIR = $(INSTALL_PLAT_DIR)/Eiger
 EIGER_FULL_VERSION = $(shell cat camera/eiger/VERSION)
 INSTALL_EIGER_VDIR = $(INSTALL_EIGER_DIR)/v$(EIGER_FULL_VERSION)
+endif
+
+ifneq ($(COMPILE_DEXELA), 0)
+INSTALL_DEXELA_DIR = $(INSTALL_PLAT_DIR)/Dexela
+DEXELA_FULL_VERSION = $(shell cat camera/dexela/VERSION)
+INSTALL_DEXELA_VDIR = $(INSTALL_DEXELA_DIR)/v$(DEXELA_FULL_VERSION)
+endif
+
+ifneq ($(COMPILE_PIXIRAD), 0)
+INSTALL_PIXIRAD_DIR = $(INSTALL_PLAT_DIR)/Pixirad
+PIXIRAD_FULL_VERSION = $(shell cat camera/pixirad/VERSION)
+INSTALL_PIXIRAD_VDIR = $(INSTALL_PIXIRAD_DIR)/v$(PIXIRAD_FULL_VERSION)
+endif
+
+ifneq ($(COMPILE_HEXITEC), 0)
+INSTALL_HEXITEC_DIR = $(INSTALL_PLAT_DIR)/Hexitec
+HEXITEC_FULL_VERSION = $(shell cat camera/hexitec/VERSION)
+INSTALL_HEXITEC_VDIR = $(INSTALL_HEXITEC_DIR)/v$(HEXITEC_FULL_VERSION)
 endif
 
 ifneq ($(COMPILE_SPS_IMAGE),0)
@@ -373,7 +390,6 @@ ifneq ($(COMPILE_MAXIPIX), 0)
 	rm -rf $(INSTALL_LIB_DIR)/liblimamaxipix.so*
 	cp -d build/liblimamaxipix.so* $(INSTALL_LIB_DIR)
 	cp sip/maxipix/limamaxipix.so $(INSTALL_MAXIPIX_VDIR)
-	cp camera/maxipix/python/Mpx*.py $(INSTALL_MAXIPIX_VDIR)
 	cp camera/maxipix/include/*.h $(INSTALL_INCLUDE_DIR)
 endif
 ifneq ($(COMPILE_PILATUS), 0)
@@ -646,4 +662,34 @@ ifneq ($(COMPILE_EIGER), 0)
 	cp -d build/liblimaeiger.so* $(INSTALL_LIB_DIR)
 	cp sip/eiger/limaeiger.so $(INSTALL_EIGER_VDIR)
 	cp camera/eiger/include/*.h $(INSTALL_INCLUDE_DIR)
+endif
+
+ifneq ($(COMPILE_DEXELA), 0)
+	mkdir -p $(INSTALL_DEXELA_VDIR)
+	cp camera/dexela/python/__init__.py $(INSTALL_DEXELA_DIR)
+	$(call install_core_dep,$(INSTALL_DEXELA_VDIR))
+	rm -rf $(INSTALL_LIB_DIR)/liblimadexela.so*
+	cp -d build/liblimadexela.so* $(INSTALL_LIB_DIR)
+	cp sip/dexela/limadexela.so $(INSTALL_DEXELA_VDIR)
+	cp camera/dexela/include/*.h $(INSTALL_INCLUDE_DIR)
+endif
+
+ifneq ($(COMPILE_PIXIRAD), 0)
+	mkdir -p $(INSTALL_PIXIRAD_VDIR)
+	cp camera/pixirad/python/__init__.py $(INSTALL_PIXIRAD_DIR)
+	$(call install_core_dep,$(INSTALL_PIXIRAD_VDIR))
+	rm -rf $(INSTALL_LIB_DIR)/liblimapixirad.so*
+	cp -d build/liblimapixirad.so* $(INSTALL_LIB_DIR)
+	cp sip/pixirad/limapixirad.so $(INSTALL_PIXIRAD_VDIR)
+	cp camera/pixirad/include/*.h $(INSTALL_INCLUDE_DIR)
+endif
+
+ifneq ($(COMPILE_HEXITEC), 0)
+	mkdir -p $(INSTALL_HEXITEC_VDIR)
+	cp camera/hexitec/python/__init__.py $(INSTALL_HEXITEC_DIR)
+	$(call install_core_dep,$(INSTALL_HEXITEC_VDIR))
+	rm -rf $(INSTALL_LIB_DIR)/liblimahexitec.so*
+	cp -d build/liblimahexitec.so* $(INSTALL_LIB_DIR)
+	cp sip/hexitec/limahexitec.so $(INSTALL_HEXITEC_VDIR)
+	cp camera/hexitec/include/*.h $(INSTALL_INCLUDE_DIR)
 endif
