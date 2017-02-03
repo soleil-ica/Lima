@@ -62,7 +62,7 @@ SaveContainerNxs::~SaveContainerNxs()
 //--------------------------------------------------------------------------------------------------------------------
 //- Event rising by CtSaving when frame is acquired (newFrameReady)
 //--------------------------------------------------------------------------------------------------------------------
-bool SaveContainerNxs::_open(const std::string &filename, std::ios_base::openmode openFlags)
+void* SaveContainerNxs::_open(const std::string &filename, std::ios_base::openmode openFlags)
 {
 	DEB_MEMBER_FUNCT();
 	return (void*)true;
