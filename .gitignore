@@ -24,3 +24,8 @@ install
 /.pydevproject
 /.settings
 
+/Lima.config
+/Lima.creator
+/Lima.creator.user
+/Lima.files
+/Lima.includes
