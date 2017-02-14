@@ -193,12 +193,12 @@ long SaveContainerNxs::_writeFile(void*,Data &aData,
 			if(m_options.at(1) == "NO_COPY" )
 			{
 				DEB_TRACE() << "SaveContainerNxs::_writeFile() - Memory Mode = NO_COPY";
-				m_writer->SetDataItemMemoryMode(m_pars.prefix+"_image", nxcpp::DataStreamer::MemoryMode::NO_COPY);
+				m_writer->SetDataItemMemoryMode(m_pars.prefix+"_image", nxcpp::DataStreamer::NO_COPY);
 			}
 			else
 			{
 				DEB_TRACE() << "SaveContainerNxs::_writeFile() - Memory Mode = COPY";
-				m_writer->SetDataItemMemoryMode(m_pars.prefix+"_image", nxcpp::DataStreamer::MemoryMode::COPY);
+				m_writer->SetDataItemMemoryMode(m_pars.prefix+"_image", nxcpp::DataStreamer::COPY);
 			}
 
             DEB_TRACE() << "Create/Initialize DataStreamer : " << t.elapsed_msec() << " ms\n";
