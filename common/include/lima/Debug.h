@@ -25,9 +25,24 @@
 #ifndef DEBUG_H
 #define DEBUG_H
 
+#ifdef SOLEIL_YAT_STREAM
+//undef some Mx library CONSTANTS, otherwise compilation errors  with Yat/utils/Loging.h enum ELogLevel
+#undef LOG_INFO
+#undef LOG_EMERG
+#undef LOG_ALERT
+#undef LOG_CRIT
+#undef LOG_ERR
+#undef LOG_WARNING
+#undef LOG_NOTICE
+#undef LOG_INFO
+#undef LOG_DEBUG
+#include "yat/utils/Logging.h"
+#endif
+
 #include "lima/LimaCompatibility.h"
 #include "lima/StreamUtils.h"
 #include "lima/ThreadUtils.h"
+
 
 #include <string>
 #include <map>
@@ -212,9 +227,11 @@ private:
 	static Flags s_type_flags;
 	static Flags s_fmt_flags;
 	static Flags s_mod_flags;
-
-	static DebStream *s_deb_stream;
-
+#ifdef SOLEIL_YAT_STREAM   
+    static std::ostringstream* oss_yat_stream;    
+#endif    
+    static DebStream *s_deb_stream;
+    
 	static std::map<DebType,   std::string> *s_type_name_map;
 	static std::map<DebFormat, std::string> *s_fmt_name_map;
 	static std::map<DebModule, std::string> *s_mod_name_map;
@@ -428,8 +445,12 @@ inline DebProxy::~DebProxy()
 {
 	if (!m_lock)
 		return;
-
+#ifdef SOLEIL_YAT_STREAM   
+    YAT_INFO_STREAM((*DebParams::oss_yat_stream).str());    
+    (*DebParams::oss_yat_stream).str("");    
+#endif
 	*DebParams::s_deb_stream << std::endl;
+
 	delete m_lock;
 }
 
@@ -442,7 +463,13 @@ template <class T>
 inline const DebProxy& DebProxy::operator <<(const T& o) const
 {
 	if (isActive()) 
-		*DebParams::s_deb_stream << o;
+    {
+#ifdef SOLEIL_YAT_STREAM              
+        *DebParams::oss_yat_stream<< o;                 
+#else       
+		*DebParams::s_deb_stream<< o;           
+#endif        
+    }
 	return *this;
 }
 
