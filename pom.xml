@@ -123,7 +123,8 @@
                         </excludes>
                         <defines>
                             <define>WITH_NXS_SAVING</define>
-                            <define>WITH_HDF5_SAVING</define>                           
+                            <define>WITH_HDF5_SAVING</define>
+                            <define>SOLEIL_YAT_STREAM</define>  
                         </defines>
                     </cpp>
                                     
