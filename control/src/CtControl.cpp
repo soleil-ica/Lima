@@ -631,7 +631,9 @@ void CtControl::getStatus(Status& status) const
   status = m_status;
   HwInterface::Status aHwStatus;
   m_hw->getStatus(aHwStatus);
+#ifndef SOLEIL_YAT_STREAM  
   DEB_TRACE() << DEB_VAR1(aHwStatus);
+#endif
   if(aHwStatus.acq == AcqFault)
     status.AcquisitionStatus = AcqFault;
   else if(status.AcquisitionStatus == AcqReady)
@@ -1276,8 +1278,9 @@ void CtControl::ImageStatus::reset()
   LastImageReady	= -1;
   LastImageSaved	= -1;
   LastCounterReady	= -1;
-  
+#ifndef SOLEIL_YAT_STREAM  
   DEB_TRACE() << *this;
+#endif  
 }
 // ----------------------------------------------------------------------------
 // Struct Status
