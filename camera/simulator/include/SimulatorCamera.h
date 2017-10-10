@@ -121,8 +121,8 @@ class LIBSIMULATOR_API Camera
 	TrigMode m_trig_mode;
 	SimuThread m_thread;
 
-  double m_xOffset;
-  double m_yOffset;
+  double m_x_Offset;
+  double m_y_Offset;
   
 };
 
