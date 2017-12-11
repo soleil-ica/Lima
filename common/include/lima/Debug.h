@@ -25,7 +25,7 @@
 #ifndef DEBUG_H
 #define DEBUG_H
 
-#ifdef SOLEIL_YAT_STREAM
+#ifdef WITH_YAT_STREAM
 //undef some Mx library CONSTANTS, otherwise compilation errors  with Yat/utils/Loging.h enum ELogLevel
 #undef LOG_INFO
 #undef LOG_EMERG
@@ -227,7 +227,7 @@ private:
 	static Flags s_type_flags;
 	static Flags s_fmt_flags;
 	static Flags s_mod_flags;
-#ifdef SOLEIL_YAT_STREAM   
+#ifdef WITH_YAT_STREAM   
     static std::ostringstream* oss_yat_stream;    
 #endif    
     static DebStream *s_deb_stream;
@@ -445,7 +445,7 @@ inline DebProxy::~DebProxy()
 {
 	if (!m_lock)
 		return;
-#ifdef SOLEIL_YAT_STREAM   
+#ifdef WITH_YAT_STREAM   
     YAT_INFO_STREAM((*DebParams::oss_yat_stream).str());    
     (*DebParams::oss_yat_stream).str("");    
 #endif
@@ -464,7 +464,7 @@ inline const DebProxy& DebProxy::operator <<(const T& o) const
 {
 	if (isActive()) 
     {
-#ifdef SOLEIL_YAT_STREAM              
+#ifdef WITH_YAT_STREAM              
         *DebParams::oss_yat_stream<< o;                 
 #else       
 		*DebParams::s_deb_stream<< o;           

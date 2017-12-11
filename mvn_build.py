@@ -129,6 +129,9 @@ def build_plugin(plugin,target_path):
   """Build the selected plugin"""
 
   print "Building:    " , plugin, "\n"
+  if plugin == "camera/eiger":
+    set_project_dir(plugin+'/sdk/linux/EigerAPI')
+    build()
   set_project_dir(plugin)
   build()
 
@@ -150,6 +153,7 @@ def build_plugin(plugin,target_path):
 #------------------------------------------------------------------------------
 def build_all_camera(target_path):
     start=time.time()
+    
     # this take 2 min 45 sec on a quad core
     if multi_proc == False:
         for cam in camera_list:
