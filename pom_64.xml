@@ -17,8 +17,8 @@
 	
 	<properties>
 		<!-- path to the 64 bits libs -->
-		<!-- <FL-64bits-libs>/home/informatique/ica/langlois/compil_64</FL-64bits-libs> -->
-        <FL-64bits-libs>/home/informatique/ica/langlois/binaries-backup/el6-64</FL-64bits-libs>
+		<!-- <libs-64bits>/home/informatique/ica/langlois/compil_64</libs-64bits> -->
+        <libs-64bits>/home/informatique/ica/noureddine/DeviceSources/lib-el6-64</libs-64bits>
 	</properties>
   
     <scm>
@@ -119,7 +119,7 @@
                             <includePath>control/software_operation/include</includePath>
                             <includePath>hardware/include</includePath>         
 							
-                            <includePath>${FL-64bits-libs}/hdf5-1.8.16/include</includePath>
+                            <includePath>${libs-64bits}/hdf5-1.8.16/include</includePath>
 							        
                         </includePaths>
                         <excludes>
@@ -143,25 +143,25 @@
 							<!-- hdf5 (1.8.16) 64 -->
 							<name>hdf5</name>
 							<type>shared</type>
-							<directory>${FL-64bits-libs}/hdf5-1.8.16/lib</directory>
+							<directory>${libs-64bits}/hdf5-1.8.16/lib</directory>
 						</lib>
 						<lib>
 							<!-- hdf5 (1.8.16) 64 -->
 							<name>hdf5_cpp</name>
 							<type>shared</type>
-							<directory>${FL-64bits-libs}/hdf5-1.8.16/lib</directory>
+							<directory>${libs-64bits}/hdf5-1.8.16/lib</directory>
 						</lib>
 						<lib>
 							<!-- hdf5 (1.8.16) 64 -->
 							<name>hdf5_hl</name>
 							<type>shared</type>
-							<directory>${FL-64bits-libs}/hdf5-1.8.16/lib</directory>
+							<directory>${libs-64bits}/hdf5-1.8.16/lib</directory>
 						</lib>
 						<lib>
 							<!-- hdf5 (1.8.16) 64 -->
 							<name>hdf5_hl_cpp</name>
 							<type>shared</type>
-							<directory>${FL-64bits-libs}/hdf5-1.8.16/lib</directory>
+							<directory>${libs-64bits}/hdf5-1.8.16/lib</directory>
 						</lib>
 					</libs>
 				   </linker>
