@@ -54,10 +54,12 @@ def copy_file_ext(from_path, to_path, file_ext):
 #------------------------------------------------------------------------------
 # Compilation
 #------------------------------------------------------------------------------
-def build():
-  rc = os.system(maven_clean_install + maven_options)
-  if rc != 0:
-    raise BuildError
+def build(pom_file_options = ""):
+  if not copyonly:
+    print "Maven command = ", maven_clean_install + pom_file_options + maven_options
+    rc = os.system(maven_clean_install + pom_file_options + maven_options)
+    if rc != 0:
+        raise BuildError
 
 #------------------------------------------------------------------------------
 # Clean
@@ -76,6 +78,8 @@ def clean_all():
     set_project_dir('third-party/Processlib');clean()
     for cam in camera_list:
         set_project_dir('camera/'+ cam);clean()
+        if cam == "eiger":
+            set_project_dir('camera/'+ cam +'/sdk/linux/EigerAPI');clean()
     set_project_dir('applications/tango/cpp');clean()
 
 #------------------------------------------------------------------------------
@@ -85,10 +89,7 @@ def build_device(target_path):
   print 'Build Device LimaDetector\n'
   set_project_dir('applications/tango/cpp')
 
-  print "Maven command = ", maven_clean_install + maven_platform_options + maven_options
-  rc = os.system(maven_clean_install + maven_platform_options + maven_options)
-  if rc != 0:
-    raise BuildError
+  build(pom_file_options = maven_platform_options)
 
   if "linux" in sys.platform:
     if target_path is not None:
@@ -153,7 +154,6 @@ def build_plugin(plugin,target_path):
 #------------------------------------------------------------------------------
 def build_all_camera(target_path):
     start=time.time()
-    
     # this take 2 min 45 sec on a quad core
     if multi_proc == False:
         for cam in camera_list:
@@ -201,6 +201,7 @@ if __name__ == "__main__":
   parser.add_argument("-q","--quiet", help="mvn will be quiet", action="store_true")
   parser.add_argument("-m","--multiproc", help="cameras will be compiled in multiprocessing way",action="store_true")
   parser.add_argument("-d","--directory", help="automatically install Lima binaries into the specified installation directory")
+  parser.add_argument("-c","--copyonlydir", help="only install Lima binaries into the specified installation directory")
 
   args = parser.parse_args()
   
@@ -224,6 +225,13 @@ if __name__ == "__main__":
     target_path = args.directory
   else:
     target_path = None
+    
+  if args.copyonlydir:
+    target_path = args.copyonlydir
+    copyonly = True
+  else:
+    target_path = None
+    copyonly = False
 
   # variables
   maven_clean_install   = "mvn clean install -DenableCheckRelease=false"
@@ -231,50 +239,50 @@ if __name__ == "__main__":
   current_dir           = os.getcwd()
   
   for target in args.modules:
-	  try:
-		# Build all
-		if target == 'all':
-			print 'BUILD ALL\n'
-			build_plugin('third-party/Processlib', target_path)
-			build_lima_core(target_path)
-			build_all_camera(target_path)
-			build_device(target_path)
-		# Build processlib
-		elif target == 'processlib':
-			print 'BUILD ProcessLib\n'
-			build_plugin('third-party/Processlib', target_path)
-		# Build device
-		elif target == 'device':
-			print 'BUILD Device\n'
-			build_device(target_path)
-		# Build lima
-		elif target == 'lima':
-			print 'BUILD Lima Core\n'
-			build_lima_core(target_path)
-		# Build cameras
-		elif target == 'cameras':
-			print 'BUILD All ',platform,' Cameras\n'
-			build_all_camera(target_path)
-		# Clean all
-		elif target =='cleanall':
-			clean_all()
-		# Build cam
-		else:
-			for cam in camera_list:
-				if target == cam:
-					build_plugin('camera/'+cam, target_path)
-					break
+      try:
+        # Build all
+        if target == 'all':
+            print 'BUILD ALL\n'
+            build_plugin('third-party/Processlib', target_path)
+            build_lima_core(target_path)
+            build_all_camera(target_path)
+            build_device(target_path)
+        # Build processlib
+        elif target == 'processlib':
+            print 'BUILD ProcessLib\n'
+            build_plugin('third-party/Processlib', target_path)
+        # Build device
+        elif target == 'device':
+            print 'BUILD Device\n'
+            build_device(target_path)
+        # Build lima
+        elif target == 'lima':
+            print 'BUILD Lima Core\n'
+            build_lima_core(target_path)
+        # Build cameras
+        elif target == 'cameras':
+            print 'BUILD All ',platform,' Cameras\n'
+            build_all_camera(target_path)
+        # Clean all
+        elif target =='cleanall':
+            clean_all()
+        # Build cam
+        else:
+            for cam in camera_list:
+                if target == cam:
+                    build_plugin('camera/'+cam, target_path)
+                    break
 
-		# display list of copied files, if -d option is used
-		if args.directory:
-			print '\n'
-			print '============================================='
-			print 'Modules are compiled & copied as shown below:'
-			print '============================================='
-			for file in copied_files:
-				print '- ',file
-			print '\n'
+        # display list of copied files, if -d option is used
+        if args.directory:
+            print '\n'
+            print '============================================='
+            print 'Modules are compiled & copied as shown below:'
+            print '============================================='
+            for file in copied_files:
+                print '- ',file
+            print '\n'
 
-	  except BuildError, e:
-		sys.stderr.write("!!!   BUILD FAILED    !!!\n")
+      except BuildError, e:
+        sys.stderr.write("!!!   BUILD FAILED    !!!\n")
 
