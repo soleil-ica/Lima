@@ -131,8 +131,13 @@ def build_plugin(plugin,target_path):
 
   print "Building:    " , plugin, "\n"
   if plugin == "camera/eiger":
-    set_project_dir(plugin+'/sdk/linux/EigerAPI')
+    #specific treatment for the EigerAPI library
+    set_project_dir(plugin+'/sdk/linux/EigerAPI')	
     build()
+    if "linux" in sys.platform:
+      if target_path is not None:
+        dest_path = os.path.join(target_path, '')
+        copy_file_ext(src_path, dest_path, '.so')	
   set_project_dir(plugin)
   build()
 
