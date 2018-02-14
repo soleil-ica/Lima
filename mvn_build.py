@@ -193,6 +193,7 @@ if __name__ == "__main__":
     device_src_path = './target/nar/bin/x86-Windows-msvc/'
 
   print "platform : ", platform
+  target_path = None
 
   # command line parsing
   parser = ArgumentParser(description="Lima compilation script")
@@ -235,7 +236,6 @@ if __name__ == "__main__":
     target_path = args.copyonlydir
     copyonly = True
   else:
-    target_path = None
     copyonly = False
 
   # variables
@@ -279,7 +279,7 @@ if __name__ == "__main__":
                     break
 
         # display list of copied files, if -d option is used
-        if args.directory:
+        if args.directory or args.copyonlydir:
             print '\n'
             print '============================================='
             print 'Modules are compiled & copied as shown below:'
