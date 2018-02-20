@@ -16,7 +16,7 @@ import sys
 import shutil
 import string
 import time
-
+import platform
 
 copied_files = []
 
@@ -56,6 +56,9 @@ def copy_file_ext(from_path, to_path, file_ext):
 #------------------------------------------------------------------------------
 def build(pom_file_options = ""):
   if not copyonly:
+    if platform == "linux64":
+        pom_file_options = " --file pom_64.xml"
+
     print "Maven command = ", maven_clean_install + pom_file_options + maven_options
     rc = os.system(maven_clean_install + pom_file_options + maven_options)
     if rc != 0:
@@ -180,11 +183,18 @@ def build_all_camera(target_path):
 if __name__ == "__main__":
 
   if "linux" in sys.platform:
-    platform = "linux"
-    camera_list = ["aviex", "basler", "eiger", "imxpad", "marccd","merlin", "pilatus","prosilica","simulator","xpad"]
-    maven_platform_options = " --file pom-linux.xml"
-    src_path = './target/nar/lib/i386-Linux-g++/shared/'
-    device_src_path = './target/nar/bin/i386-Linux-g++/'
+    if "i686" in platform.machine():
+        platform = "linux32"
+        camera_list = ["aviex", "basler", "eiger", "imxpad", "marccd","merlin", "pilatus","prosilica","simulator","xpad"]
+        maven_platform_options = " --file pom-linux.xml"
+        src_path = './target/nar/lib/i386-Linux-g++/shared/'
+        device_src_path = './target/nar/bin/i386-Linux-g++/'
+    elif "x86_64" in platform.machine():
+        platform = "linux64"
+        camera_list = ["eiger","simulator"]
+        maven_platform_options = " --file pom_64.xml"
+        src_path = './target/nar/lib/i386-Linux-g++/shared/'
+        device_src_path = './target/nar/bin/i386-Linux-g++/'
   if "win32" in sys.platform:
     platform = "win32"
     camera_list = ["andor", "hamamatsu", "pco","perkinelmer","roperscientific","simulator","uview"]

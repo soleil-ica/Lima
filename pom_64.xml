@@ -49,13 +49,13 @@
                 <dependency>
                     <groupId>fr.soleil.lib</groupId>
                     <artifactId>YAT-amd64-Linux-gcc-shared-${mode}</artifactId>
-					<version>1.12.0</version>
+					<version>1.13.13</version>
                 </dependency>
                            
                 <dependency>
                     <groupId>fr.soleil.lib</groupId>
                     <artifactId>NexusCPP-amd64-Linux-gcc-shared-${mode}</artifactId>
-					<version>3.1.1</version>
+					<version>3.2.2</version>
                 </dependency>
             
                 <!-- <dependency>
