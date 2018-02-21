@@ -46,23 +46,6 @@
                 </os>
             </activation>
             <dependencies>
-                <dependency>
-                    <groupId>fr.soleil.lib</groupId>
-                    <artifactId>YAT-amd64-Linux-gcc-shared-${mode}</artifactId>
-					<version>1.13.13</version>
-                </dependency>
-                           
-                <dependency>
-                    <groupId>fr.soleil.lib</groupId>
-                    <artifactId>NexusCPP-amd64-Linux-gcc-shared-${mode}</artifactId>
-					<version>3.2.2</version>
-                </dependency>
-            
-                <!-- <dependency>
-                    <groupId>ncsa.uiuc.edu</groupId>
-                    <artifactId>HDF5-${aol}-shared-release</artifactId>
-                    <version>1.8.13</version>
-                </dependency> -->
             </dependencies>
         </profile>
        
@@ -120,6 +103,8 @@
                             <includePath>hardware/include</includePath>         
 							
                             <includePath>${libs-64bits}/hdf5-1.8.16/include</includePath>
+                            <includePath>${libs-64bits}/yat-1.13.13/include</includePath>
+                            <includePath>${libs-64bits}/nexuscpp-3.2.2/include</includePath>                            
 							        
                         </includePaths>
                         <excludes>
@@ -163,6 +148,18 @@
 							<type>shared</type>
 							<directory>${libs-64bits}/hdf5-1.8.16/lib</directory>
 						</lib>
+						<lib>
+							<!-- YAT (1.13.13) 64 -->
+							<name>YAT-amd64-Linux-gcc-shared-release-1.13.13</name>
+							<type>shared</type>
+							<directory>${libs-64bits}/yat-1.13.13/lib</directory>
+						</lib>
+						<lib>
+							<!-- NexusCPP (3.2.2) 64 -->
+							<name>NexusCPP-amd64-Linux-gcc-shared-release-3.2.2</name>
+							<type>shared</type>
+							<directory>${libs-64bits}/nexuscpp-3.2.2/lib</directory>
+						</lib>                                                
 					</libs>
 				   </linker>
                                     

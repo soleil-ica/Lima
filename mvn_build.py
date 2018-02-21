@@ -89,7 +89,7 @@ def clean_all():
 # build the LimaDetector device
 #------------------------------------------------------------------------------
 def build_device(target_path):
-  print 'Build Device LimaDetector\n'
+  print 'Building Device LimaDetector\n'
   set_project_dir('applications/tango/cpp')
 
   build(pom_file_options = maven_platform_options)
@@ -110,7 +110,7 @@ def build_device(target_path):
 # build the Lima Core
 #------------------------------------------------------------------------------
 def build_lima_core(target_path):
-  print 'Build Lima\n'
+  print 'Building Lima:\n'
   set_project_dir('.')
   build()
 
