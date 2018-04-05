@@ -126,7 +126,7 @@
 					<libs>
 						<lib>
 							<!-- hdf5 (1.8.16) 64 -->
-							<name>hdf5</name>
+							<name>hdf5</name
 							<type>shared</type>
 							<directory>${libs-64bits}/hdf5-1.8.16/lib</directory>
 						</lib>
@@ -150,13 +150,13 @@
 						</lib>
 						<lib>
 							<!-- YAT (1.13.13) 64 -->
-							<name>YAT-amd64-Linux-gcc-shared-release-1.13.13</name>
+							<name>YAT</name>
 							<type>shared</type>
 							<directory>${libs-64bits}/yat-1.13.13/lib</directory>
 						</lib>
 						<lib>
 							<!-- NexusCPP (3.2.2) 64 -->
-							<name>NexusCPP-amd64-Linux-gcc-shared-release-3.2.2</name>
+							<name>NexusCPP</name>
 							<type>shared</type>
 							<directory>${libs-64bits}/nexuscpp-3.2.2/lib</directory>
 						</lib>                                                
