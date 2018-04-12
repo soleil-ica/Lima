@@ -112,7 +112,7 @@ def build_device(target_path):
 def build_lima_core(target_path):
   print 'Building Lima:\n'
   set_project_dir('.')
-  build()
+  build(pom_file_options = maven_platform_options)
 
   if "linux" in sys.platform:
     if target_path is not None:
@@ -142,7 +142,7 @@ def build_plugin(plugin,target_path):
         dest_path = os.path.join(target_path, '')
         copy_file_ext(src_path, dest_path, '.so')	
   set_project_dir(plugin)
-  build()
+  build(pom_file_options = maven_platform_options)
 
   if "linux" in sys.platform:
     if target_path is not None:
