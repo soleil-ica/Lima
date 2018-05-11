@@ -44,13 +44,17 @@
                         
             </dependencies>
         </profile>
+		
         <profile>
-            <id>Lima_windows</id>
-            <activation>
-                <os>
-                    <family>Windows</family>
-                </os>
+            <id>win_32</id>
+            <activation>            
+                <activeByDefault>false</activeByDefault>                
+                <property>
+                    <name>env</name>
+                    <value>win_32</value>
+                </property>
             </activation>
+			
             <dependencies>
                 <dependency>
                     <groupId>fr.soleil.lib</groupId>
