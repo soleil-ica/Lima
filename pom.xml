@@ -87,7 +87,9 @@
                                     <!--<exclude>control/src/CtSaving_Hdf5.cpp</exclude>-->
                                     <!--<exclude>control/src/CtSaving_Nxs.cpp</exclude>-->
                                     <exclude>camera/pilatus/doc/camera_sirius.def</exclude>                            
+                                    <exclude>camera/pilatus/doc/camera_px1.def</exclude>
                                 </excludes>
+                                
                                 <defines>
                                     <define>WITH_NXS_SAVING</define>
                                     <define>WITH_HDF5_SAVING</define>
@@ -99,8 +101,7 @@
                                 <library>
                                     <type>shared</type>
                                 </library>
-                            </libraries>
-                                                        
+                            </libraries>           
                         </configuration>
                     </plugin>
                     <plugin>
@@ -112,7 +113,6 @@
                     </plugin>                    
                 </plugins>
             </build>
-                
         </profile>
        
         <profile>
