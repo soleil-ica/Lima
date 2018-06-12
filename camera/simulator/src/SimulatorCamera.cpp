@@ -104,6 +104,8 @@ void Camera::SimuThread::execStartAcq()
 		setStatus(Readout);
 		void *ptr = buffer_mgr.getFrameBufferPtr(frame_nb);
 		typedef unsigned char *BufferPtr;
+        //Setting offsets 
+        frame_builder.setXYOffsets(m_simu->m_x_offset, m_simu->m_y_offset);
 		frame_builder.getNextFrame(BufferPtr(ptr));
 
 		HwFrameInfoType frame_info;
@@ -137,6 +139,8 @@ void Camera::init()
 	m_exp_time = 1.0;
 	m_lat_time = 0.0;
 	m_nb_frames = 1;
+    m_x_offset = 0;
+    m_y_offset = 0;
 }
 
 Camera::~Camera()
@@ -229,6 +233,16 @@ void Camera::reset()
 	stopAcq();
 
 	init();
+}
+
+void Camera::computeNewXOffset(double xOffset)
+{
+    this->m_x_offset = xOffset;
+}
+
+void Camera::computeNewYOffset(double yOffset)
+{
+    this->m_y_offset = yOffset;
 }
 
 HwInterface::StatusType::Basic Camera::getStatus()
