@@ -305,7 +305,7 @@
                                     <exclude>control/src/CtSaving_Fits.cpp</exclude>
                                     <exclude>control/src/CtSaving_Tiff.cpp</exclude>
                                     <exclude>control/src/CtSpsImage.cpp</exclude>
-                                    <!--<exclude>control/src/CtSaving_Hdf5.cpp</exclude>-->
+                                    <exclude>control/src/CtSaving_Hdf5.cpp</exclude>
                                     <!--<exclude>control/src/CtSaving_Nxs.cpp</exclude>-->
                                     <exclude>camera/pilatus/doc/camera_sirius.def</exclude>      
                                     <exclude>common/src/RegExUtils.cpp</exclude>
@@ -320,7 +320,7 @@
                                     <define>_USRDLL</define>
                                     <define>_WIN32_WINNT=0x0502</define> <!-- For Windows XP Support -->                                    
                                     <define>WITH_NXS_SAVING</define>
-                                    <define>WITH_HDF5_SAVING</define>
+                                    <!--<define>WITH_HDF5_SAVING</define>-->
                                     <define>WITH_YAT_STREAM</define>  
                                 </defines>
                             </cpp>
