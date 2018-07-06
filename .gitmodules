@@ -61,3 +61,6 @@
 [submodule "camera/slsjungfrau"]
 	path = camera/slsjungfrau
 	url = git@github.com:soleil-ica/Lima-camera-slsjungfrau.git
+[submodule "camera/lambda"]
+	path = camera/lambda
+	url = git@github.com:soleil-ica/Lima-camera-lambda.git
