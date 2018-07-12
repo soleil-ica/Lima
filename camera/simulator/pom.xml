@@ -23,7 +23,29 @@
 
     <profiles>
         <profile>
-        
+            <id>Lima_linux</id>
+            <activation>
+                <os>
+                    <family>Linux</family>
+                </os>
+            </activation>
+            <dependencies>
+                <!-- For Nexus Saving -->
+                <dependency>
+                    <groupId>fr.soleil.lib</groupId>
+                    <artifactId>LimaCore-${aol}-shared-${mode}</artifactId>
+                    <version>1.7.7</version>
+                </dependency>
+                
+                <dependency>
+                    <groupId>ncsa.uiuc.edu</groupId>
+                    <artifactId>HDF5-${aol}-shared-release</artifactId>
+                </dependency>   
+                        
+            </dependencies>
+        </profile>
+		
+        <profile>
             <id>win_32</id>
             <activation>            
                 <activeByDefault>false</activeByDefault>                
