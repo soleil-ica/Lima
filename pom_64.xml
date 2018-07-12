@@ -9,7 +9,7 @@
 
     <groupId>fr.soleil.lib</groupId>
     <artifactId>LimaCore-amd64-Linux-gcc-shared-${mode}</artifactId>
-    <version>1.7.7-SNAPSHOT</version>
+    <version>1.7.7</version>
 
     <packaging>nar</packaging>
     <name>LimaCore</name>
@@ -17,8 +17,7 @@
 	
 	<properties>
 		<!-- path to the 64 bits libs -->
-		<!-- <libs-64bits>/home/informatique/ica/langlois/compil_64</libs-64bits> -->
-        <libs-64bits>/home/informatique/ica/noureddine/DeviceSources/lib-el6-64</libs-64bits>
+        <libs-64bits>/home/informatique/ica/langlois/binaries-backup/el6-64</libs-64bits>
 	</properties>
   
     <scm>
@@ -32,12 +31,12 @@
         <dependency>
             <groupId>fr.soleil.lib</groupId>
             <artifactId>LimaProcesslib-amd64-Linux-gcc-shared-${mode}</artifactId>
-            <version>1.3.7</version>
+            <version>1.3.8</version>
         </dependency>
         <dependency>
             <groupId>fr.soleil.lib</groupId>
             <artifactId>YAT-amd64-Linux-gcc-shared-${mode}</artifactId>
-            <version>1.13.13</version>
+            <version>1.13.16</version>
         </dependency>
         <dependency>
             <groupId>fr.soleil.lib</groupId>
