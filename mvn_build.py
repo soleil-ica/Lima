@@ -191,7 +191,7 @@ if __name__ == "__main__":
         device_src_path = './target/nar/bin/i386-Linux-g++/'
     elif "x86_64" in platform.machine():
         platform = "linux64"
-        camera_list = ["eiger","simulator"]
+        camera_list = ["eiger","slsjungfrau","simulator"]
         maven_platform_options = " --file pom_64.xml"
         src_path = './target/nar/lib/i386-Linux-g++/shared/'
         device_src_path = './target/nar/bin/i386-Linux-g++/'
