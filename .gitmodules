@@ -64,3 +64,6 @@
 [submodule "camera/lambda"]
 	path = camera/lambda
 	url = git@github.com:soleil-ica/Lima-camera-lambda.git
+[submodule "camera/ufxc"]
+	path = camera/ufxc
+	url = git@github.com:soleil-ica/Lima-camera-ufxc.git
