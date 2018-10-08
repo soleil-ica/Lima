@@ -23,11 +23,13 @@
 
     <profiles>
         <profile>
-            <id>Lima_linux</id>
+            <id>linux_32</id>
             <activation>
-                <os>
-                    <family>Linux</family>
-                </os>
+                <activeByDefault>true</activeByDefault>                
+                <property>
+                    <name>env</name>
+                    <value>linux_32</value>
+                </property>
             </activation>
             <dependencies>
                 <!-- For Nexus Saving -->
@@ -46,8 +48,67 @@
         </profile>
 		
         <profile>
+            <id>linux_64</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>                
+                <property>
+                    <name>env</name>
+                    <value>linux_64</value>
+                </property>
+            </activation>
+            <properties>
+                <!-- path to the 64 bits libs -->
+                <libs-64bits>/home/informatique/ica/ica/LIB_EL6_64</libs-64bits>
+            </properties>
+                
+            <!-- LimaProcesslib -->
+            <dependencies>            
+                <!-- For Nexus Saving -->
+                <dependency>
+                    <groupId>fr.soleil.lib</groupId>
+                    <artifactId>LimaCore-amd64-Linux-gcc-shared-${mode}</artifactId>
+                    <version>1.7.7</version>
+                </dependency>     
+            </dependencies>    
+            
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.freehep</groupId>
+                        <artifactId>freehep-nar-plugin</artifactId>
+                        <configuration>
+                            <cpp>
+                                <sourceDirectory>src</sourceDirectory>
+                                <includePaths>
+                                    <includePath>include</includePath>
+                                </includePaths>  
+                            </cpp>
+                            <linker>
+                                <libs>
+                                </libs>
+                            </linker>
+                            <libraries>
+                                <library>
+                                    <type>shared</type>
+                                </library>
+                            </libraries>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>fr.soleil.maven.plugins</groupId>
+                        <artifactId>maven-check-plugin</artifactId>
+                        <configuration>
+                            <enable>false</enable>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+                                
+        </profile>
+                
+        <profile>
             <id>win_32</id>
-            <activation>            
+            <activation>
                 <activeByDefault>false</activeByDefault>                
                 <property>
                     <name>env</name>
