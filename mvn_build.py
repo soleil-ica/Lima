@@ -196,13 +196,13 @@ if __name__ == "__main__":
         device_src_path = './target/nar/bin/i386-Linux-g++/'
     elif "x86_64" in platform.machine():
         platform = "linux64"
-        camera_list = ["eiger","slsjungfrau","simulator"]
+        camera_list = ["eiger","slsjungfrau","lambda","simulator"]
         maven_platform_options = " --file pom_64.xml"
         src_path = './target/nar/lib/i386-Linux-g++/shared/'
         device_src_path = './target/nar/bin/i386-Linux-g++/'
   if "win32" in sys.platform:
     platform = "win32"
-    camera_list = ["andor", "hamamatsu", "pco","perkinelmer","roperscientific","simulator","uview"]
+    camera_list = ["andor", "dhyana", "hamamatsu", "pco","perkinelmer","roperscientific","simulator","uview"]
     maven_platform_options = " -Denv=win_32"
     src_path = './target/nar/lib/x86-Windows-msvc/shared/'
     device_src_path = './target/nar/bin/x86-Windows-msvc/'
