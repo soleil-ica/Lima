@@ -223,6 +223,7 @@ if __name__ == "__main__":
   parser.add_argument("-m","--multiproc", help="cameras will be compiled in multiprocessing way",action="store_true")
   parser.add_argument("-d","--directory", help="automatically install Lima binaries into the specified installation directory")
   parser.add_argument("-c","--copyonlydir", help="only install Lima binaries into the specified installation directory")
+  parser.add_argument("-e","--env", help="set the env option for the pom: eg: -e win_32_vc12 will set: -Denv=win_32_vc12")
 
   args = parser.parse_args()
   
@@ -233,6 +234,9 @@ if __name__ == "__main__":
 
   if args.pomfile:
     maven_platform_options = " --file " + args.pomfile
+    
+  if args.env:
+    maven_platform_options += " -Denv=" + args.env
 
   if args.quiet:
     maven_options += " -q"
