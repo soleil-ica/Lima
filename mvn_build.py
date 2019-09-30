@@ -201,12 +201,13 @@ if __name__ == "__main__":
         src_path = './target/nar/lib/i386-Linux-g++/shared/'
         device_src_path = './target/nar/bin/i386-Linux-g++/'
   if "win32" in sys.platform:
-    platform = "win32"
-    camera_list = ["andor", "dhyana", "hamamatsu", "pco","perkinelmer","roperscientific","simulator","uview"]
-    maven_platform_options = " -Denv=win_32"
-    src_path = './target/nar/lib/x86-Windows-msvc/shared/'
-    device_src_path = './target/nar/bin/x86-Windows-msvc/'
-
+    if "x86" in platform.machine():
+        platform = "win32"
+        camera_list = ["andor", "hamamatsu", "pco","perkinelmer","roperscientific","simulator","uview"]
+        maven_platform_options = " -Denv=win_32_vc12"
+        src_path = './target/nar/lib/x86-Windows-msvc/shared/'
+        device_src_path = './target/nar/bin/x86-Windows-msvc/'
+    
   print "platform : ", platform
   target_path = None
 
