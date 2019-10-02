@@ -73,3 +73,6 @@
 [submodule "camera/xspress3"]
 	path = camera/xspress3
 	url = git://github.com/soleil-ica/Lima-camera-xspress3.git
+[submodule "camera/slseiger"]
+	path = camera/slseiger
+	url = git://github.com/soleil-ica/Lima-camera-slseiger.git
