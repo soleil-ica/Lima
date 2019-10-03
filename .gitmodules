@@ -54,7 +54,7 @@
 	url = git://github.com/soleil-ica/Lima-camera-eiger
 [submodule "applications/tango/cpp"]
 	path = applications/tango/cpp
-	url = git://github.com/soleil-ica/Lima-tango-cpp
+	url = git://github.com/hott-onin/Lima-tango-cpp
 [submodule "camera/slsjungfrau"]
 	path = camera/slsjungfrau
 	url = git://github.com/soleil-ica/Lima-camera-slsjungfrau.git
