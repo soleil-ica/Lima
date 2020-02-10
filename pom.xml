@@ -21,7 +21,6 @@
         <url>https://github.com/soleil-ica/Lima</url>
     </scm>
 
-	
     <profiles>
         <profile>
             <id>linux_32</id>
@@ -115,131 +114,6 @@
             </build>
         </profile>
        
-        <profile>
-            <id>linux_64</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>                
-                <property>
-                    <name>env</name>
-                    <value>linux_64</value>
-                </property>
-            </activation>
-            <properties>
-                <!-- path to the 64 bits libs -->
-                <libs-64bits>/home/informatique/ica/ica/LIB_EL6_64</libs-64bits>
-            </properties>
-                
-            <!-- LimaProcesslib -->
-            <dependencies>            
-                <dependency>
-                    <groupId>fr.soleil.lib</groupId>
-                    <artifactId>LimaProcesslib-${aol}-shared-${mode}</artifactId>
-                    <version>1.3.9</version>
-                </dependency>
-            </dependencies>    
-            
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.freehep</groupId>
-                        <artifactId>freehep-nar-plugin</artifactId>
-                        <configuration>
-                            <cpp>
-                                <sourceDirectory>${project.basedir}</sourceDirectory>
-                                <includes>
-                                    <include>common/src/*.cpp</include>
-                                    <include>control/src/*.cpp</include>
-                                    <include>control/software_operation/src/*.cpp</include>
-                                    <include>hardware/src/*.cpp</include>
-                                </includes>
-                                
-                                <includePaths>
-                                    <includePath>common/include</includePath>
-                                    <includePath>control/include</includePath>
-                                    <includePath>control/src</includePath>
-                                    <includePath>control/software_operation/include</includePath>
-                                    <includePath>hardware/include</includePath>         
-							
-                                    <includePath>${libs-64bits}/hdf5-1.8.16/include</includePath>
-                                    <includePath>${libs-64bits}/yat-1.13.13/include</includePath>
-                                    <includePath>${libs-64bits}/nexuscpp-3.2.2/include</includePath>                            
-							        
-                                </includePaths>
-                                <excludes>
-                                    <exclude>control/src/CtSaving_Cbf.cpp</exclude>	
-                                    <exclude>control/src/CtSaving_Fits.cpp</exclude>
-                                    <exclude>control/src/CtSaving_Tiff.cpp</exclude>
-                                    <exclude>control/src/CtSpsImage.cpp</exclude>
-                                    <!--<exclude>control/src/CtSaving_Hdf5.cpp</exclude>-->
-                                    <!-- <exclude>control/src/CtSaving_Nxs.cpp</exclude> -->
-                                    <exclude>camera/pilatus/doc/camera_sirius.def</exclude>                            
-                                </excludes>
-                                <defines>
-                                    <define>WITH_NXS_SAVING</define>
-                                    <define>WITH_HDF5_SAVING</define>
-                                </defines>
-                            </cpp>
-					
-                            <linker>
-                                <libs>
-                                    <lib>
-                                        <!-- hdf5 (1.8.16) 64 -->
-                                        <name>hdf5</name>
-                                        <type>shared</type>
-                                        <directory>${libs-64bits}/hdf5-1.8.16/lib</directory>
-                                    </lib>
-                                    <lib>
-                                        <!-- hdf5 (1.8.16) 64 -->
-                                        <name>hdf5_cpp</name>
-                                        <type>shared</type>
-                                        <directory>${libs-64bits}/hdf5-1.8.16/lib</directory>
-                                    </lib>
-                                    <lib>
-                                        <!-- hdf5 (1.8.16) 64 -->
-                                        <name>hdf5_hl</name>
-                                        <type>shared</type>
-                                        <directory>${libs-64bits}/hdf5-1.8.16/lib</directory>
-                                    </lib>
-                                    <lib>
-                                        <!-- hdf5 (1.8.16) 64 -->
-                                        <name>hdf5_hl_cpp</name>
-                                        <type>shared</type>
-                                        <directory>${libs-64bits}/hdf5-1.8.16/lib</directory>
-                                    </lib>
-                                    <lib>
-                                        <!-- YAT (1.13.13) 64 -->
-                                        <name>YAT</name>
-                                        <type>shared</type>
-                                        <directory>${libs-64bits}/yat-1.13.13/lib</directory>
-                                    </lib>
-                                    <lib>
-                                        <!-- NexusCPP (3.2.2) 64 -->
-                                        <name>NexusCPP</name>
-                                        <type>shared</type>
-                                        <directory>${libs-64bits}/nexuscpp-3.2.2/lib</directory>
-                                    </lib>                                                
-                                </libs>
-                            </linker>
-                                    
-                            <libraries>
-                                <library>
-                                    <type>shared</type>
-                                </library>
-                            </libraries>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>fr.soleil.maven.plugins</groupId>
-                        <artifactId>maven-check-plugin</artifactId>
-                        <configuration>
-                            <enable>false</enable>
-                        </configuration>
-                    </plugin>                    
-                </plugins>
-            </build>
-                                
-        </profile>
-        
         <profile>
             <id>win_32_vc12</id>
             <activation>            

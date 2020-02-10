@@ -38,72 +38,8 @@
                     <artifactId>LimaCore-${aol}-shared-${mode}</artifactId>
                     <version>1.7.9</version>
                 </dependency>
-                
-                <!-- <dependency>
-                    <groupId>ncsa.uiuc.edu</groupId>
-                    <artifactId>HDF5-${aol}-shared-release</artifactId>
-                </dependency>    -->
-                        
+
             </dependencies>
-        </profile>
-		
-        <profile>
-            <id>linux_64</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>                
-                <property>
-                    <name>env</name>
-                    <value>linux_64</value>
-                </property>
-            </activation>
-            <properties>
-                <!-- path to the 64 bits libs -->
-                <libs-64bits>/home/informatique/ica/ica/LIB_EL6_64</libs-64bits>
-            </properties>
-                
-            <!-- LimaProcesslib -->
-            <dependencies>            
-                <!-- For Nexus Saving -->
-                <dependency>
-                    <groupId>fr.soleil.lib</groupId>
-                    <artifactId>LimaCore-amd64-Linux-gcc-shared-${mode}</artifactId>
-                    <version>1.7.8</version>
-                </dependency>     
-            </dependencies>    
-            
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.freehep</groupId>
-                        <artifactId>freehep-nar-plugin</artifactId>
-                        <configuration>
-                            <cpp>
-                                <sourceDirectory>src</sourceDirectory>
-                                <includePaths>
-                                    <includePath>include</includePath>
-                                </includePaths>  
-                            </cpp>
-                            <linker>
-                                <libs>
-                                </libs>
-                            </linker>
-                            <libraries>
-                                <library>
-                                    <type>shared</type>
-                                </library>
-                            </libraries>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>fr.soleil.maven.plugins</groupId>
-                        <artifactId>maven-check-plugin</artifactId>
-                        <configuration>
-                            <enable>false</enable>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-                                
         </profile>
 
         <profile>
