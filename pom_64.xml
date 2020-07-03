@@ -58,8 +58,8 @@
                             <includePath>hardware/include</includePath>         
 							
                             <includePath>${libs-64bits}/hdf5-1.8.16/include</includePath>
-                            <includePath>${libs-64bits}/yat-1.13.16/include</includePath>
-                            <includePath>${libs-64bits}/nexuscpp-3.2.2/include</includePath>                            
+                            <includePath>${libs-64bits}/yat-1.17.2/include</includePath>
+                            <includePath>${libs-64bits}/nexuscpp-3.3.5/include</includePath>                            
 							        
                         </includePaths>
                         <excludes>
@@ -69,11 +69,13 @@
                             <exclude>control/src/CtSpsImage.cpp</exclude>
                             <!--<exclude>control/src/CtSaving_Hdf5.cpp</exclude>-->
                             <!--<exclude>control/src/CtSaving_Nxs.cpp</exclude>-->
-                            <exclude>camera/pilatus/doc/camera_sirius.def</exclude>                            
+                            <exclude>camera/pilatus/doc/camera_sirius.def</exclude>
+							<exclude>camera/pilatus/doc/camera_px1.def</exclude>
                         </excludes>
                         <defines>
                             <define>WITH_NXS_SAVING</define>
                             <define>WITH_HDF5_SAVING</define>
+							<define>WITH_YAT_STREAM</define>
                         </defines>
                     </cpp>
 					
@@ -105,16 +107,16 @@
                             </lib>                                
                             
                             <lib>
-                                <!-- YAT (1.13.16) 64 -->
-                                <name>YAT-amd64-Linux-gcc-shared-release-1.13.16</name>
+                                <!-- YAT 64 -->
+                                <name>YAT-amd64-Linux-gcc-shared-release-1.17.2</name>
                                 <type>shared</type>
-                                <directory>${libs-64bits}/yat-1.13.16/lib</directory>
+                                <directory>${libs-64bits}/yat-1.17.2/lib</directory>
                             </lib>
                             <lib>
-                                <!-- NexusCPP (3.2.2) 64 -->
-                                <name>NexusCPP-amd64-Linux-gcc-shared-release-3.2.2</name>
+                                <!-- NexusCPP  64 -->
+                                <name>NexusCPP-amd64-Linux-gcc-shared-release-3.3.5</name>
                                 <type>shared</type>
-                                <directory>${libs-64bits}/nexuscpp-3.2.2/lib</directory>
+                                <directory>${libs-64bits}/nexuscpp-3.3.5/lib</directory>
                             </lib>     
                                                                 
                         </libs>

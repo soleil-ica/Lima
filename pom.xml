@@ -135,7 +135,7 @@
                 <dependency>
                     <groupId>fr.soleil.lib</groupId>
                     <artifactId>NexusCPP-${aol}-shared-${mode}</artifactId>
-					<version>3.3.4-SNAPSHOT</version> <!-- forced to work with shared -->
+					<version>3.3.5</version> <!-- forced to work with shared -->
                 </dependency>
                         
                 <dependency>
@@ -146,7 +146,7 @@
                 <dependency>
                     <groupId>fr.soleil.lib</groupId>
                     <artifactId>YAT-${aol}-shared-${mode}</artifactId>
-					<version>1.15.1-SNAPSHOT</version> <!-- forced to work with shared -->
+					<version>1.17.2</version> <!-- forced to work with shared -->
                 </dependency>                            
             </dependencies>
             <build>

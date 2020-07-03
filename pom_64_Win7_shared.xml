@@ -19,10 +19,10 @@
         <profile>
             <id>Windows7_x64</id>
             <activation>
-            <os>
-                <family>windows</family>
-                <name>windows 7</name>
-            </os>
+				<os>
+					<family>windows</family>
+					<name>windows 7</name>
+				</os>
             </activation>
             
       <properties>
@@ -35,14 +35,18 @@
 	<properties>
         <libs-64bits>C:\VC_12_MAVEN\LIB_VC12_64</libs-64bits>
 
-		<yat-lib>${libs-64bits}\yat\target\nar\lib\amd64-Windows-msvc\shared\</yat-lib>
-		<yat-include>${libs-64bits}\yat\target\nar\include\</yat-include>
+		<!-- <yat-lib>${libs-64bits}\yat\target\nar\lib\amd64-Windows-msvc\shared\</yat-lib>
+		<yat-include>${libs-64bits}\yat\target\nar\include\</yat-include> -->
+		<yat-lib>T:\DEV\flosvn\yat\target\nar\lib\amd64-Windows-msvc\shared\</yat-lib>
+		<yat-include>T:\DEV\flosvn\yat\target\nar\include\</yat-include>
 
 		<hdf5-lib>${libs-64bits}\hdf5\lib\x64\</hdf5-lib>
 		<hdf5-include>${libs-64bits}\hdf5\include\</hdf5-include>
 		
-		<nexuscpp-lib>${libs-64bits}\nexuscpp\target\nar\lib\amd64-Windows-msvc\shared</nexuscpp-lib>
-		<nexuscpp-include>${libs-64bits}\nexuscpp\target\nar\include\</nexuscpp-include>
+		<!-- <nexuscpp-lib>${libs-64bits}\nexuscpp\target\nar\lib\amd64-Windows-msvc\shared</nexuscpp-lib>
+		<nexuscpp-include>${libs-64bits}\nexuscpp\target\nar\include\</nexuscpp-include> -->
+		<nexuscpp-lib>T:\DEV\flosvn\nexuscpp\target\nar\lib\amd64-Windows-msvc\shared</nexuscpp-lib>
+		<nexuscpp-include>T:\DEV\flosvn\nexuscpp\target\nar\include\</nexuscpp-include>
 	</properties>
   
     <scm>
@@ -107,14 +111,14 @@
                         <libs>
 							<!-- nexuscpp 64 bits -->
 							<lib>
-								<name>NexusCPP-amd64-Windows-msvc12-shared-release-3.3.2</name>
+								<name>NexusCPP-amd64-Windows-msvc12-shared-release-3.3.5</name>
 								<type>shared</type>
 								<directory>${nexuscpp-lib}</directory>
 							</lib>
 
 							<!-- yat 64 bits -->
 							<lib>
-								<name>YAT-amd64-Windows-msvc12-shared-release-1.14.4</name>
+								<name>YAT-amd64-Windows-msvc12-shared-release-1.17.2</name>
 								<type>shared</type>
 								<directory>${yat-lib}</directory>
 							</lib>
