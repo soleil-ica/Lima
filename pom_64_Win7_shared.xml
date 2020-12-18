@@ -33,20 +33,23 @@
     </profiles>    
 	
 	<properties>
-        <libs-64bits>C:\VC_12_MAVEN\LIB_VC12_64</libs-64bits>
+        <YAT.version>1.17.5</YAT.version> 
+        <NexusCPP.version>3.3.6</NexusCPP.version> 
+        
+        <libs-64bits>C:\VC_12_MAVEN\LIB_VC12_64</libs-64bits>        
 
 		<!-- <yat-lib>${libs-64bits}\yat\target\nar\lib\amd64-Windows-msvc\shared\</yat-lib>
 		<yat-include>${libs-64bits}\yat\target\nar\include\</yat-include> -->
-		<yat-lib>T:\DEV\flosvn\yat\target\nar\lib\amd64-Windows-msvc\shared\</yat-lib>
-		<yat-include>T:\DEV\flosvn\yat\target\nar\include\</yat-include>
+		<yat-lib>T:\DEV\flosvn\YAT-${YAT.version}\target\nar\lib\amd64-Windows-msvc\shared\</yat-lib>
+		<yat-include>T:\DEV\flosvn\YAT-${YAT.version}\include\</yat-include>
 
 		<hdf5-lib>${libs-64bits}\hdf5\lib\x64\</hdf5-lib>
 		<hdf5-include>${libs-64bits}\hdf5\include\</hdf5-include>
 		
 		<!-- <nexuscpp-lib>${libs-64bits}\nexuscpp\target\nar\lib\amd64-Windows-msvc\shared</nexuscpp-lib>
 		<nexuscpp-include>${libs-64bits}\nexuscpp\target\nar\include\</nexuscpp-include> -->
-		<nexuscpp-lib>T:\DEV\flosvn\nexuscpp\target\nar\lib\amd64-Windows-msvc\shared</nexuscpp-lib>
-		<nexuscpp-include>T:\DEV\flosvn\nexuscpp\target\nar\include\</nexuscpp-include>
+		<nexuscpp-lib>T:\DEV\flosvn\NexusCPP-${NexusCPP.version}\target\nar\lib\amd64-Windows-msvc\shared</nexuscpp-lib>
+		<nexuscpp-include>T:\DEV\flosvn\NexusCPP-${NexusCPP.version}\include\</nexuscpp-include>
 	</properties>
   
     <scm>
@@ -98,12 +101,13 @@
                             <exclude>control/src/CtSaving_Tiff.cpp</exclude>
                             <exclude>control/src/CtSpsImage.cpp</exclude>
                             <exclude>control/src/CtSaving_Hdf5.cpp</exclude>
-                            <!-- <exclude>control/src/CtSaving_Nxs.cpp</exclude> -->
-                            <exclude>camera/pilatus/doc/camera_sirius.def</exclude>                            
+                            
+                            <exclude>camera/pilatus/doc/camera_sirius.def</exclude>        
+                            <exclude>camera/pilatus/doc/camera_px1.def</exclude>
                         </excludes>
                         <defines>
                             <define>WITH_NXS_SAVING</define>
-                            <!--<define>WITH_HDF5_SAVING</define>-->
+                            <define>WITH_YAT_STREAM</define>
                         </defines>
                     </cpp>
 					
@@ -111,14 +115,14 @@
                         <libs>
 							<!-- nexuscpp 64 bits -->
 							<lib>
-								<name>NexusCPP-amd64-Windows-msvc12-shared-release-3.3.5</name>
+								<name>NexusCPP-amd64-Windows-msvc12-shared-release-${NexusCPP.version}</name>
 								<type>shared</type>
 								<directory>${nexuscpp-lib}</directory>
 							</lib>
 
 							<!-- yat 64 bits -->
 							<lib>
-								<name>YAT-amd64-Windows-msvc12-shared-release-1.17.2</name>
+								<name>YAT-amd64-Windows-msvc12-shared-release-${YAT.version}</name>
 								<type>shared</type>
 								<directory>${yat-lib}</directory>
 							</lib>

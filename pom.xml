@@ -20,7 +20,12 @@
         <developerConnection>scm:git:git://github.com/soleil-ica/Lima.git</developerConnection>
         <url>https://github.com/soleil-ica/Lima</url>
     </scm>
-
+    
+    <properties> <!-- used for Win32 only -->
+        <YAT.version>1.17.5</YAT.version> 
+        <NexusCPP.version>3.3.6</NexusCPP.version> 
+    </properties>
+    
     <profiles>
         <profile>
             <id>linux_32</id>
@@ -83,8 +88,6 @@
                                     <exclude>control/src/CtSaving_Fits.cpp</exclude>
                                     <exclude>control/src/CtSaving_Tiff.cpp</exclude>
                                     <exclude>control/src/CtSpsImage.cpp</exclude>
-                                    <!--<exclude>control/src/CtSaving_Hdf5.cpp</exclude>-->
-                                    <!--<exclude>control/src/CtSaving_Nxs.cpp</exclude>-->
                                     <exclude>camera/pilatus/doc/camera_sirius.def</exclude>                            
                                     <exclude>camera/pilatus/doc/camera_px1.def</exclude>
                                 </excludes>
@@ -135,7 +138,7 @@
                 <dependency>
                     <groupId>fr.soleil.lib</groupId>
                     <artifactId>NexusCPP-${aol}-shared-${mode}</artifactId>
-					<version>3.3.5</version> <!-- forced to work with shared -->
+					<version>${NexusCPP.version}</version> <!-- forced to work with shared -->
                 </dependency>
                         
                 <dependency>
@@ -146,7 +149,7 @@
                 <dependency>
                     <groupId>fr.soleil.lib</groupId>
                     <artifactId>YAT-${aol}-shared-${mode}</artifactId>
-					<version>1.17.2</version> <!-- forced to work with shared -->
+					<version>${YAT.version}</version> <!-- forced to work with shared -->
                 </dependency>                            
             </dependencies>
             <build>
@@ -178,7 +181,6 @@
                                     <exclude>control/src/CtSaving_Tiff.cpp</exclude>
                                     <exclude>control/src/CtSpsImage.cpp</exclude>
                                     <exclude>control/src/CtSaving_Hdf5.cpp</exclude>
-                                    <!--<exclude>control/src/CtSaving_Nxs.cpp</exclude>-->
                                     <exclude>camera/pilatus/doc/camera_sirius.def</exclude>      
                                     <exclude>common/src/RegExUtils.cpp</exclude>
                                     <exclude>common/src/SimplePipe.cpp</exclude>
@@ -190,9 +192,9 @@
                                     <define>NDEBUG</define>
                                     <define>_WINDOWS</define>
                                     <define>_USRDLL</define>
-                                    <define>_WIN32_WINNT=0x0502</define> <!-- For Windows XP Support -->                                    
+                                    <define>_WIN32_WINNT=0x0502</define> <!-- For Windows XP Support -->      
+                                    
                                     <define>WITH_NXS_SAVING</define>
-                                    <!--<define>WITH_HDF5_SAVING</define>-->
                                     <define>WITH_YAT_STREAM</define>  
                                     <define>YAT_DLL</define>
                                     <define>NEXUSCPP_DLL</define>
