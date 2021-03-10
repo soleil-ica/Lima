@@ -197,7 +197,7 @@ if __name__ == "__main__":
         device_src_path         = './target/nar/bin/i386-Linux-g++/'
     elif "x86_64" in platform.machine():
         platform                = "linux64"
-        camera_list             = ["eiger","slseiger","slsjungfrau","lambda","simulator", "xspress3", "ufxc"]
+        camera_list             = ["eiger","slseiger","slsjungfrau","lambda","simulator", "xspress3", "ufxc", "spectral"]
         maven_platform_options  = " --file pom_64.xml"
         maven_clean             = "mvn clean  --file pom_64.xml"
         src_path                = './target/nar/lib/i386-Linux-g++/shared/'
