@@ -73,3 +73,6 @@
 [submodule "camera/spectrumoneccd"]
 	path = camera/spectrumoneccd
 	url = git@github.com:soleil-ica/Lima-camera-spectrumoneccd.git
+[submodule "camera/spectralinstrument"]
+	path = camera/spectralinstrument
+	url = git@github.com:soleil-ica/Lima-camera-spectralinstrument.git
