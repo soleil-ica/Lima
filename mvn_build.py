@@ -81,6 +81,8 @@ def clean_all():
         set_project_dir('camera/'+ cam);clean()
         if cam == "eiger":
             set_project_dir('camera/'+ cam +'/sdk/linux/EigerAPI');clean()
+        if cam == "ufxc":
+            set_project_dir('camera/'+ cam +'/UFXC-LIB/UFXCLib');clean()
     set_project_dir('applications/tango/cpp');clean()
 
 #------------------------------------------------------------------------------
@@ -144,6 +146,17 @@ def build_plugin(plugin,target_path):
         dest_path = os.path.join(target_path, '')
         copy_file_ext(src_path, dest_path, '.so')	
         
+  if plugin == "camera/ufxc":
+    # specific treatment for the UFXCLib library
+    print "Building first:    " , plugin+'/UFXC-LIB/UFXCLib', "\n"
+    set_project_dir(plugin+'/UFXC-LIB/UFXCLib')	
+    build(pom_file_options = maven_platform_options)
+    # copy UFXCLib sdk
+    if "linux" in sys.platform:
+      if target_path is not None:
+        dest_path = os.path.join(target_path, '')
+        copy_file_ext(src_path, dest_path, '.so')	
+        
   # compil plugin
   set_project_dir(plugin)
   build(pom_file_options = maven_platform_options)
@@ -187,6 +200,7 @@ def build_all_camera(target_path):
 #------------------------------------------------------------------------------
 if __name__ == "__main__":
 
+  # Select the platform (linux/Win/32/64)
   if "linux" in sys.platform:
     if "i686" in platform.machine():
         platform                = "linux32"
@@ -197,7 +211,7 @@ if __name__ == "__main__":
         device_src_path         = './target/nar/bin/i386-Linux-g++/'
     elif "x86_64" in platform.machine():
         platform                = "linux64"
-        camera_list             = ["eiger","slseiger","slsjungfrau","lambda","simulator", "xspress3", "ufxc", "spectral"]
+        camera_list             = ["eiger","slseiger","slsjungfrau","lambda","simulator", "xspress3", "ufxc","spectralinstrument"]
         maven_platform_options  = " --file pom_64.xml"
         maven_clean             = "mvn clean  --file pom_64.xml"
         src_path                = './target/nar/lib/i386-Linux-g++/shared/'
@@ -217,8 +231,9 @@ if __name__ == "__main__":
         maven_clean             = "mvn clean  --file pom_64_Win7_shared.xml"
         src_path                = './target/nar/lib/amd64-Windows-msvc/shared/'
         device_src_path         = './target/nar/bin/amd64-Windows-msvc/'
-    
-  print "platform : ", platform
+
+  print "============================================="    
+  print " platform : ", platform
   target_path = None
 
   # command line parsing
@@ -226,7 +241,7 @@ if __name__ == "__main__":
   cams_string = ""
   for cam in camera_list:
     cams_string += cam + "|"
-  help_string = "modules to compile (several modules are possible: all|processlib|lima|cameras|"+ cams_string+ "|device||cleanall)"
+  help_string = "modules to compile (several modules are possible: all|processlib|lima|cameras|" + cams_string + "|device||cleanall)"
   parser.add_argument("modules",nargs = '*', help=help_string)
   parser.add_argument("-o","--offline", help="mvn will be offline",action="store_true")
   parser.add_argument("-f","--pomfile", help="name of the pom file(for the Tango device only)")
@@ -234,7 +249,8 @@ if __name__ == "__main__":
   parser.add_argument("-m","--multiproc", help="cameras will be compiled in multiprocessing way",action="store_true")
   parser.add_argument("-d","--directory", help="automatically install Lima binaries into the specified installation directory")
   parser.add_argument("-c","--copyonlydir", help="only install Lima binaries into the specified installation directory")
-  parser.add_argument("-e","--env", help="set the env option for the pom: eg: -e win_32_vc12 will set: -Denv=win_32_vc12")
+  parser.add_argument("-e","--env", help="set the env option for the pom: eg: -e win_32_vc12 will set: -Denv=win_32_vc12 ;\
+                                          it is also used to force linux32 on 64 bits linux: use -e linux_32")
 
   args = parser.parse_args()
   
@@ -267,7 +283,20 @@ if __name__ == "__main__":
     copyonly = True
   else:
     copyonly = False
+  
+  
+  # Force the platform to be linux32 even on 64 bits linux (this overload the platform selection from above)
+  if args.env == 'linux_32':
+    print " Compilation ",args.env," sur platform ", platform
+    platform                = "linux32"
+    camera_list             = ["basler", "imxpad", "marccd","merlin", "pilatus","prosilica","simulator", "xpad"]
+    maven_platform_options  = " -Denv=linux_32"
+    maven_clean             = "mvn clean"
+    src_path                = './target/nar/lib/i386-Linux-g++/shared/'
+    device_src_path         = './target/nar/bin/i386-Linux-g++/'  
 
+  print "============================================="  
+  
   # variables
   maven_clean_install   = "mvn clean install -DenableCheckRelease=false"
   current_dir           = os.getcwd()
