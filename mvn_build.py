@@ -204,7 +204,7 @@ if __name__ == "__main__":
   if "linux" in sys.platform:
     if "i686" in platform.machine():
         platform                = "linux32"
-        camera_list             = ["basler", "imxpad", "marccd","merlin", "pilatus","prosilica","simulator", "xpad","spectrumoneccd"]
+        camera_list             = ["basler", "imxpad", "marccd","merlin", "pilatus","prosilica","simulator", "xpad","spectrumone"]
         maven_platform_options  = " -Denv=linux_32"
         maven_clean             = "mvn clean"
         src_path                = './target/nar/lib/i386-Linux-g++/shared/'
@@ -289,7 +289,7 @@ if __name__ == "__main__":
   if args.env == 'linux_32':
     print " Compilation ",args.env," sur platform ", platform
     platform                = "linux32"
-    camera_list             = ["basler", "imxpad", "marccd","merlin", "pilatus","prosilica","simulator", "xpad", "spectrumoneccd"]
+    camera_list             = ["basler", "imxpad", "marccd","merlin", "pilatus","prosilica","simulator", "xpad", "spectrumone"]
     maven_platform_options  = " -Denv=linux_32"
     maven_clean             = "mvn clean"
     src_path                = './target/nar/lib/i386-Linux-g++/shared/'

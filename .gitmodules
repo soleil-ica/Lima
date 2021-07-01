@@ -70,9 +70,9 @@
 [submodule "camera/slseiger"]
 	path = camera/slseiger
 	url = git://github.com/soleil-ica/Lima-camera-slseiger.git
-[submodule "camera/spectrumoneccd"]
-	path = camera/spectrumoneccd
-	url = git://github.com/soleil-ica/Lima-camera-spectrumoneccd.git
 [submodule "camera/spectralinstrument"]
 	path = camera/spectralinstrument
 	url = git://github.com/soleil-ica/Lima-camera-spectralinstrument.git
+[submodule "camera/spectrumone"]
+	path = camera/spectrumone
+	url = git://github.com/soleil-ica/Lima-camera-spectrumone.git
