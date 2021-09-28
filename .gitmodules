@@ -16,9 +16,6 @@
 [submodule "camera/common/espia"]
 	path = camera/common/espia
 	url = git://github.com/soleil-ica/Lima-camera-common-espia
-[submodule "camera/prosilica"]
-	path = camera/prosilica
-	url = git://github.com/soleil-ica/Lima-camera-prosilica
 [submodule "camera/xpad"]
 	path = camera/xpad
 	url = git://github.com/soleil-ica/Lima-camera-xpad
