@@ -204,7 +204,7 @@ if __name__ == "__main__":
   if "linux" in sys.platform:
     if "i686" in platform.machine():
         platform                = "linux32"
-        camera_list             = ["basler", "imxpad", "marccd","merlin", "pilatus","simulator", "xpad","spectrumone"]
+        camera_list             = ["basler", "imxpad", "marccd","merlin", "pilatus","simulator", "xpad"]
         maven_platform_options  = " -Denv=linux_32"
         maven_clean             = "mvn clean"
         src_path                = './target/nar/lib/i386-Linux-g++/shared/'
@@ -226,7 +226,7 @@ if __name__ == "__main__":
         device_src_path         = './target/nar/bin/x86-Windows-msvc/'
     else:
         platform                = "win64"
-        camera_list             = ["dhyana","hamamatsu", "pco", "simulator"]
+        camera_list             = ["dhyana","hamamatsu", "pco", "simulator", "spectrumone"]
         maven_platform_options  = " --file pom_64_Win7_shared.xml"
         maven_clean             = "mvn clean  --file pom_64_Win7_shared.xml"
         src_path                = './target/nar/lib/amd64-Windows-msvc/shared/'
@@ -289,7 +289,7 @@ if __name__ == "__main__":
   if args.env == 'linux_32':
     print " Compilation ",args.env," sur platform ", platform
     platform                = "linux32"
-    camera_list             = ["basler", "imxpad", "marccd","merlin", "pilatus","simulator", "xpad", "spectrumone"]
+    camera_list             = ["basler", "imxpad", "marccd","merlin", "pilatus","simulator", "xpad"]
     maven_platform_options  = " -Denv=linux_32"
     maven_clean             = "mvn clean"
     src_path                = './target/nar/lib/i386-Linux-g++/shared/'
