@@ -4,7 +4,7 @@
     <parent>
         <groupId>fr.soleil</groupId>
         <artifactId>super-pom-C-CPP</artifactId>
-		<version>18.1.2</version>
+		<version>21.2.5-64</version>
     </parent>
 
     <groupId>fr.soleil.lib</groupId>
@@ -33,15 +33,15 @@
     </profiles>    
 	
 	<properties>
-        <YAT.version>1.17.5</YAT.version> 
-        <NexusCPP.version>3.3.6</NexusCPP.version> 
+        <YAT.version>1.18.6</YAT.version> 
+        <NexusCPP.version>3.4.0</NexusCPP.version> 
         
         <libs-64bits>C:\VC_12_MAVEN\LIB_VC12_64</libs-64bits>        
 
 		<!-- <yat-lib>${libs-64bits}\yat\target\nar\lib\amd64-Windows-msvc\shared\</yat-lib>
 		<yat-include>${libs-64bits}\yat\target\nar\include\</yat-include> -->
-		<yat-lib>T:\DEV\flosvn\YAT-${YAT.version}\target\nar\lib\amd64-Windows-msvc\shared\</yat-lib>
-		<yat-include>T:\DEV\flosvn\YAT-${YAT.version}\include\</yat-include>
+		<yat-lib>T:\DEV\libs\yat\target\nar\lib\amd64-Windows-msvc\shared\</yat-lib>
+		<yat-include>T:\DEV\libs\yat\include\</yat-include>
 
 		<hdf5-lib>${libs-64bits}\hdf5\lib\x64\</hdf5-lib>
 		<hdf5-include>${libs-64bits}\hdf5\include\</hdf5-include>

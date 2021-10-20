@@ -19,8 +19,8 @@
 		<!-- path to the 64 bits libs -->
         <libs-64bits>/home/informatique/ica/ica/LIB_EL6_64</libs-64bits>
 
-        <YAT.version>1.18.2</YAT.version> 
-        <NexusCPP.version>3.3.6</NexusCPP.version> 
+        <YAT.version>1.18.6</YAT.version> 
+        <NexusCPP.version>3.4.0</NexusCPP.version> 
 	</properties>
   
     <scm>
