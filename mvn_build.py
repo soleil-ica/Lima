@@ -9,7 +9,7 @@
 # Author: FL / AN (Hacked from S. Poirier)
 
 from argparse import ArgumentParser
-from multiprocessing import Pool
+import multiprocessing as mp
 
 import os
 import sys
@@ -57,7 +57,7 @@ def copy_file_ext(from_path, to_path, file_ext):
 def build(pom_file_options = ""):
 
   if not copyonly:
-    print "Maven command = ", maven_clean_install + pom_file_options + maven_options
+    print("Maven command = " + maven_clean_install + pom_file_options + maven_options)
     rc = os.system(maven_clean_install + pom_file_options + maven_options)
     if rc != 0:
         raise BuildError
@@ -74,7 +74,7 @@ def clean():
 # Clean all modules
 #------------------------------------------------------------------------------
 def clean_all():
-    print 'Cleaning all\n'
+    print("Cleaning all\n")
     set_project_dir('.');clean()
     set_project_dir('third-party/Processlib');clean()
     for cam in camera_list:
@@ -89,7 +89,7 @@ def clean_all():
 # build the LimaDetector device
 #------------------------------------------------------------------------------
 def build_device(target_path):
-  print 'Building Device LimaDetector\n'
+  print("Building Device LimaDetector\n'")
   set_project_dir('applications/tango/cpp')
 
   build(pom_file_options = maven_platform_options)
@@ -104,41 +104,21 @@ def build_device(target_path):
       copy_file_ext(device_src_path, dest_path, '.exe')
       copy_file_ext(device_src_path, dest_path, '.pdb')
 
-  print '\n'
+  print('\n')
 
 #------------------------------------------------------------------------------
-# build the Lima Core
+# build a module: either 'processlib', 'lima' (or 'core') or a camera plugin
 #------------------------------------------------------------------------------
-def build_lima_core(target_path):
-  print 'Building Lima:\n'
-  
-  build_plugin(".",target_path)
-  # set_project_dir('.')
-  # build(pom_file_options = maven_platform_options)
+def build_module(module, target_path):
 
-  # if "linux" in sys.platform:
-    # if target_path is not None:
-      # dest_path = os.path.join(target_path, '')
-      # copy_file_ext(src_path, dest_path, '.so')
-  # if "win32" in sys.platform:
-    # if target_path is not None:
-      # dest_path = os.path.join(target_path, '')
-      # copy_file_ext(src_path, dest_path, '.dll')
-      # copy_file_ext(src_path, dest_path, '.pdb')
-  # print '\n'
+  """Build the selected module"""
 
-#------------------------------------------------------------------------------
-# build the Plugin 'plugin'
-#------------------------------------------------------------------------------
-def build_plugin(plugin,target_path):
+  print("Building:    " + module + "\n")
 
-  """Build the selected plugin"""
-
-  print "Building:    " , plugin, "\n"
-  if plugin == "camera/eiger":
+  if module == "camera/eiger":
     # specific treatment for the EigerAPI library
-    print "Building first:    " , plugin+'/sdk/linux/EigerAPI', "\n"
-    set_project_dir(plugin+'/sdk/linux/EigerAPI')	
+    print("Building first:    " + module +'/sdk/linux/EigerAPI' + "\n")
+    set_project_dir(module + '/sdk/linux/EigerAPI')	
     build(pom_file_options = maven_platform_options)
     # copy EigerAPI sdk
     if "linux" in sys.platform:
@@ -146,10 +126,10 @@ def build_plugin(plugin,target_path):
         dest_path = os.path.join(target_path, '')
         copy_file_ext(src_path, dest_path, '.so')	
         
-  if plugin == "camera/ufxc":
+  if module == "camera/ufxc":
     # specific treatment for the UFXCLib library
-    print "Building first:    " , plugin+'/UFXC-LIB/UFXCLib', "\n"
-    set_project_dir(plugin+'/UFXC-LIB/UFXCLib')	
+    print("Building first:    " + module +'/UFXC-LIB/UFXCLib' + "\n")
+    set_project_dir(module+'/UFXC-LIB/UFXCLib')	
     build(pom_file_options = maven_platform_options)
     # copy UFXCLib sdk
     if "linux" in sys.platform:
@@ -157,11 +137,11 @@ def build_plugin(plugin,target_path):
         dest_path = os.path.join(target_path, '')
         copy_file_ext(src_path, dest_path, '.so')	
         
-  # compil plugin
-  set_project_dir(plugin)
+  # compil module
+  set_project_dir(module)
   build(pom_file_options = maven_platform_options)
 
-  # copy plugin if needed     
+  # copy module if needed     
   if "linux" in sys.platform:
     if target_path is not None:
       dest_path = os.path.join(target_path, '')
@@ -172,28 +152,43 @@ def build_plugin(plugin,target_path):
       copy_file_ext(src_path, dest_path, '.dll')
       copy_file_ext(src_path, dest_path, '.pdb')
 
-  print '\n'
-
+  print('\n')
 
 #------------------------------------------------------------------------------
-# build all linux cameras
+# build all cameras
 #------------------------------------------------------------------------------
 def build_all_camera(target_path):
     start=time.time()
     # this take 2 min 45 sec on a quad core
     if multi_proc == False:
         for cam in camera_list:
-            build_plugin('camera/' + cam, target_path)
+            build_module('camera/' + cam, target_path)
     else:
-        # this take 1 min 26 sec on a quad core
-        pool = Pool()
+        
+        """procs = []
         for cam in camera_list:
-            print "multi proc: Building:    " , cam, "\n"
-            pool.apply_async(build_plugin,('camera/' + cam, target_path))
-        pool.close()
+            proc = mp.Process(target=build_module, args=('camera/' + cam, target_path))
+            procs.append(proc)
+            proc.start()
+        
+        for proc in procs:
+            proc.join()"""
+    
+        
+        # this take 1 min 26 sec on a quad core
+        """pool = mp.Pool(processes = mp.cpu_count())
+        for cam in camera_list:
+          print("multi proc: Building:    " + cam + "\n")
+          
+          pool.apply_async(build_module, ('camera/' + cam, target_path))
+          time.sleep(2)
+        
         pool.join()
-        time.strftime("%M min %S sec", time.localtime(170))
-    print "duration for compiling all cameras (MultiProc = ",multi_proc, ") = ", time.strftime("%M min %S sec", time.localtime(time.time() - start))
+        pool.close()
+
+        time.strftime("%M min %S sec", time.localtime(170))"""
+
+    print("duration for compiling all cameras (MultiProc = " + str(multi_proc) + ") = " + str(time.strftime("%M min %S sec", time.localtime(time.time() - start))))
 
 #------------------------------------------------------------------------------
 # Main Entry point
@@ -232,8 +227,8 @@ if __name__ == "__main__":
         src_path                = './target/nar/lib/amd64-Windows-msvc/shared/'
         device_src_path         = './target/nar/bin/amd64-Windows-msvc/'
 
-  print "============================================="    
-  print " platform : ", platform
+  print("=============================================")    
+  print(" platform : " + platform)
   target_path = None
 
   # command line parsing
@@ -287,7 +282,7 @@ if __name__ == "__main__":
   
   # Force the platform to be linux32 even on 64 bits linux (this overload the platform selection from above)
   if args.env == 'linux_32':
-    print " Compilation ",args.env," sur platform ", platform
+    print(" Compilation " + args.env + " sur platform " + platform)
     platform                = "linux32"
     camera_list             = ["basler", "imxpad", "marccd","merlin", "pilatus","simulator", "xpad"]
     maven_platform_options  = " -Denv=linux_32"
@@ -295,7 +290,7 @@ if __name__ == "__main__":
     src_path                = './target/nar/lib/i386-Linux-g++/shared/'
     device_src_path         = './target/nar/bin/i386-Linux-g++/'  
 
-  print "============================================="  
+  print("=============================================")  
   
   # variables
   maven_clean_install   = "mvn clean install -DenableCheckRelease=false"
@@ -305,26 +300,26 @@ if __name__ == "__main__":
       try:
         # Build all
         if target == 'all':
-            print 'BUILD ALL\n'
-            build_plugin('third-party/Processlib', target_path)
-            build_lima_core(target_path)
+            print('BUILD ALL\n')
+            build_module('third-party/Processlib', target_path)
+            build_module('.',target_path)
             build_all_camera(target_path)
             build_device(target_path)
         # Build processlib
         elif target == 'processlib':
-            print 'BUILD ProcessLib\n'
-            build_plugin('third-party/Processlib', target_path)
-        # Build device
-        elif target == 'device':
-            print 'BUILD Device\n'
-            build_device(target_path)
+            print('BUILD ProcessLib\n')
+            build_module('third-party/Processlib', target_path)
         # Build lima
         elif target == 'lima' or target == 'core':
-            print 'BUILD Lima Core\n'
-            build_lima_core(target_path)
+            print('BUILD Lima Core\n')
+            build_module('.',target_path)
+        # Build device
+        elif target == 'device':
+            print('BUILD Device\n')
+            build_device(target_path)
         # Build cameras
         elif target == 'cameras':
-            print 'BUILD All ',platform,' Cameras\n'
+            print('BUILD All ' + platform + ' Cameras\n')
             build_all_camera(target_path)
         # Clean all
         elif target =='cleanall':
@@ -333,19 +328,19 @@ if __name__ == "__main__":
         else:
             for cam in camera_list:
                 if target == cam:
-                    build_plugin('camera/'+cam, target_path)
+                    build_module('camera/'+cam, target_path)
                     break
 
         # display list of copied files, if -d or -c option is used
         if args.directory or args.copyonlydir:
-            print '\n'
-            print '============================================='
-            print 'Modules are compiled & copied as shown below:'
-            print '============================================='
+            print('\n')
+            print('=============================================')
+            print('Modules are compiled & copied as shown below:')
+            print('=============================================')
             for file in copied_files:
-                print '- ',file
-            print '\n'
+                print('- ' + file)
+            print('\n')
 
-      except BuildError, e:
+      except BuildError as e:
         sys.stderr.write("!!!   BUILD FAILED    !!!\n")
 
