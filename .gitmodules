@@ -1,75 +1,75 @@
 [submodule "third-party/Processlib"]
 	path = third-party/Processlib
-	url = git://github.com/soleil-ica/Processlib.git
+	url = ssh://git@github.com/soleil-ica/Processlib.git
 [submodule "camera/basler"]
 	path = camera/basler
-	url = git://github.com/soleil-ica/Lima-camera-basler
+	url = ssh://git@github.com/soleil-ica/Lima-camera-basler
 [submodule "camera/pco"]
 	path = camera/pco
-	url = git://github.com/soleil-ica/Lima-camera-pco
+	url = ssh://git@github.com/soleil-ica/Lima-camera-pco
 [submodule "camera/pilatus"]
 	path = camera/pilatus
-	url = git://github.com/soleil-ica/Lima-camera-pilatus
+	url = ssh://git@github.com/soleil-ica/Lima-camera-pilatus
 [submodule "camera/maxipix"]
 	path = camera/maxipix
-	url = git://github.com/soleil-ica/Lima-camera-maxipix
+	url = ssh://git@github.com/soleil-ica/Lima-camera-maxipix
 [submodule "camera/common/espia"]
 	path = camera/common/espia
-	url = git://github.com/soleil-ica/Lima-camera-common-espia
+	url = ssh://git@github.com/soleil-ica/Lima-camera-common-espia
 [submodule "camera/xpad"]
 	path = camera/xpad
-	url = git://github.com/soleil-ica/Lima-camera-xpad
+	url = ssh://git@github.com/soleil-ica/Lima-camera-xpad
 [submodule "camera/marccd"]
 	path = camera/marccd
-	url = git://github.com/soleil-ica/Lima-camera-marccd
+	url = ssh://git@github.com/soleil-ica/Lima-camera-marccd
 [submodule "camera/roperscientific"]
 	path = camera/roperscientific
-	url = git://github.com/soleil-ica/Lima-camera-roperscientific
+	url = ssh://git@github.com/soleil-ica/Lima-camera-roperscientific
 [submodule "camera/perkinelmer"]
 	path = camera/perkinelmer
-	url = git://github.com/soleil-ica/Lima-camera-perkinelmer
+	url = ssh://git@github.com/soleil-ica/Lima-camera-perkinelmer
 [submodule "camera/andor"]
 	path = camera/andor
-	url = git://github.com/soleil-ica/Lima-camera-andor
+	url = ssh://git@github.com/soleil-ica/Lima-camera-andor
 [submodule "camera/imxpad"]
 	path = camera/imxpad
-	url = git://github.com/soleil-ica/Lima-camera-imxpad
+	url = ssh://git@github.com/soleil-ica/Lima-camera-imxpad
 [submodule "camera/hamamatsu"]
 	path = camera/hamamatsu
-	url = git://github.com/soleil-ica/Lima-camera-hamamatsu.git
+	url = ssh://git@github.com/soleil-ica/Lima-camera-hamamatsu.git
 [submodule "camera/uview"]
 	path = camera/uview
-	url = git://github.com/soleil-ica/Lima-camera-uview.git
+	url = ssh://git@github.com/soleil-ica/Lima-camera-uview.git
 [submodule "camera/merlin"]
 	path = camera/merlin
-	url = git://github.com/soleil-ica/Lima-camera-merlin
+	url = ssh://git@github.com/soleil-ica/Lima-camera-merlin
 [submodule "camera/eiger"]
 	path = camera/eiger
-	url = git://github.com/soleil-ica/Lima-camera-eiger
+	url = ssh://git@github.com/soleil-ica/Lima-camera-eiger
 [submodule "applications/tango/cpp"]
 	path = applications/tango/cpp
-	url = git://github.com/soleil-ica/Lima-tango-cpp
+	url = ssh://git@github.com/soleil-ica/Lima-tango-cpp
 [submodule "camera/slsjungfrau"]
 	path = camera/slsjungfrau
-	url = git://github.com/soleil-ica/Lima-camera-slsjungfrau.git
+	url = ssh://git@github.com/soleil-ica/Lima-camera-slsjungfrau.git
 [submodule "camera/lambda"]
 	path = camera/lambda
-	url = git://github.com/soleil-ica/Lima-camera-lambda.git
+	url = ssh://git@github.com/soleil-ica/Lima-camera-lambda.git
 [submodule "camera/ufxc"]
 	path = camera/ufxc
-	url = git://github.com/soleil-ica/Lima-camera-ufxc.git
+	url = ssh://git@github.com/soleil-ica/Lima-camera-ufxc.git
 [submodule "camera/dhyana"]
 	path = camera/dhyana
-	url = git://github.com/soleil-ica/Lima-camera-dhyana.git
+	url = ssh://git@github.com/soleil-ica/Lima-camera-dhyana.git
 [submodule "camera/xspress3"]
 	path = camera/xspress3
-	url = git://github.com/soleil-ica/Lima-camera-xspress3.git
+	url = ssh://git@github.com/soleil-ica/Lima-camera-xspress3.git
 [submodule "camera/slseiger"]
 	path = camera/slseiger
-	url = git://github.com/soleil-ica/Lima-camera-slseiger.git
+	url = ssh://git@github.com/soleil-ica/Lima-camera-slseiger.git
 [submodule "camera/spectralinstrument"]
 	path = camera/spectralinstrument
-	url = git://github.com/soleil-ica/Lima-camera-spectralinstrument.git
+	url = ssh://git@github.com/soleil-ica/Lima-camera-spectralinstrument.git
 [submodule "camera/spectrumone"]
 	path = camera/spectrumone
-	url = git://github.com/soleil-ica/Lima-camera-spectrumone.git
+	url = ssh://git@github.com/soleil-ica/Lima-camera-spectrumone.git
