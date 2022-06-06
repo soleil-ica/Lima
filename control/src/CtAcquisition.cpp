@@ -31,14 +31,14 @@ using std::max;
   if (val < m_valid_ranges.min_exp_time)				\
   {									\
     THROW_CTL_ERROR(InvalidValue)					\
-      << "Specified exposure time " << DEB_VAR1(val) << " too short: "	\
-      << DEB_VAR1(m_valid_ranges.min_exp_time);				\
+      << "Specified exposure time " << DEB_VAR1(val)*1000 << "ms too short: "	\
+      << DEB_VAR1(m_valid_ranges.min_exp_time)*1000 << "ms";				\
   }									\
   else if (val > m_valid_ranges.max_exp_time)				\
   {									\
     THROW_CTL_ERROR(InvalidValue)					\
-      << "Specified exposure time " << DEB_VAR1(val) << " too long: "	\
-      << DEB_VAR1(m_valid_ranges.max_exp_time);				\
+      << "Specified exposure time " << DEB_VAR1(val)*1000 << "ms too long: "	\
+      << DEB_VAR1(m_valid_ranges.max_exp_time)*1000 << "ms";				\
   }
 
 using namespace lima;
