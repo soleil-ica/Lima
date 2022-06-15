@@ -76,6 +76,17 @@ void SaveContainerNxs::_close(void*)
 	DEB_MEMBER_FUNCT();
 }
 
+void SaveContainerNxs::_close(bool forced_close)
+{
+	DEB_MEMBER_FUNCT();
+	if(forced_close)
+	{
+		m_writer->Finalize();
+		delete m_writer;
+		m_writer = 0;
+	}
+}
+
 
 //--------------------------------------------------------------------------------------------------------------------
 //- Event rising by CtSaving when ???
@@ -281,13 +292,7 @@ long SaveContainerNxs::_writeFile(void*,Data &aData,
 		{
 			//Finalize
 			DEB_TRACE() << "SaveContainerNxs::_writeFile() - Finalize() the writer";
-			t.restart();
-			m_writer->Finalize();
-			DEB_TRACE() << "Finalize the DataStreamer : " << t.elapsed_msec() << " ms";
-			//destroy object
-			DEB_TRACE() << "SaveContainerNxs::_writeFile() - delete the writer";
-			t.restart();
-			delete m_writer;
+			_close(true);
 			m_writer = 0;
 			DEB_TRACE() << "Delete the DataStreamer : " << t.elapsed_msec() << " ms";
 		}

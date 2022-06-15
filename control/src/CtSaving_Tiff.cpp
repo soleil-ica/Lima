@@ -70,6 +70,12 @@ void SaveContainerTiff::_close(void* f)
   delete filename;
 }
 
+
+void SaveContainerTiff::_close(bool forced_close)
+{
+	DEB_MEMBER_FUNCT();
+}
+
 long SaveContainerTiff::_writeFile(void* f,Data &aData,
 				  CtSaving::HeaderMap &aHeader,
 				  CtSaving::FileFormat aFormat)

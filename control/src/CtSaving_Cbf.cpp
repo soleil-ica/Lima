@@ -428,6 +428,12 @@ void SaveContainerCbf::_close(void* f)
   delete file;
 }
 
+void SaveContainerCbf::_close(bool forced_close)
+{
+	DEB_MEMBER_FUNCT();
+
+}
+
 long SaveContainerCbf::_writeFile(void* f,Data &aData,
 				  CtSaving::HeaderMap&,
 				  CtSaving::FileFormat)

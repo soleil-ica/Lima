@@ -2007,6 +2007,18 @@ void CtSaving::_close()
     m_saving_stop = true;
 }
 
+void CtSaving::_abort(bool is_abort)
+{
+  for(int s = 0; s < m_nb_stream; ++s)
+  {
+    Stream& stream = getStream(s);
+    if(stream.isActive())
+    {
+      stream.abortFileWriting(is_abort);
+    }
+  }
+}
+
 #ifdef WITH_CONFIG
 CtConfig::ModuleTypeCallback* CtSaving::_getConfigHandler()
 {

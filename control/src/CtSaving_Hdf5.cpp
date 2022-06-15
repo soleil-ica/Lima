@@ -495,6 +495,11 @@ void SaveContainerHdf5::_close(void* f) {
 	DEB_TRACE() << "Close current file";
 }
 
+void SaveContainerHdf5::_close(bool forced_close)
+{
+	DEB_MEMBER_FUNCT();
+}
+
 long SaveContainerHdf5::_writeFile(void* f,Data &aData,
 				   CtSaving::HeaderMap &aHeader,
 				   CtSaving::FileFormat aFormat) {

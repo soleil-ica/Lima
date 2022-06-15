@@ -69,6 +69,11 @@ void SaveContainerFits::_close(void* f)
   DEB_MEMBER_FUNCT();
 }
 
+void SaveContainerFits::_close(bool forced_close)
+{
+	DEB_MEMBER_FUNCT();
+}
+
 long SaveContainerFits::_writeFile(void* f,Data &aData,
 				  CtSaving::HeaderMap &aHeader,
 				  CtSaving::FileFormat aFormat)

@@ -332,10 +332,12 @@ namespace lima {
       void compressionFinished(Data&);
       int getMaxConcurrentWritingTask() const;
       void setMaxConcurrentWritingTask(int nb);
+      void _abort(bool is_abort){_close(is_abort);}
     protected:
       virtual void* _open(const std::string &filename,
 			 std::ios_base::openmode flags) = 0;
       virtual void _close(void*) = 0;
+      virtual void _close(bool) = 0;
       virtual long _writeFile(void*,Data &data,
 			      CtSaving::HeaderMap &aHeader,
 			      FileFormat) = 0;
@@ -446,6 +448,8 @@ namespace lima {
       { m_save_cnt->prepareWrittingFrame(frame_nr); }
       void createStatistic(Data& data)
       { m_save_cnt->createStatistic(data); }
+
+      void abortFileWriting(bool is_abort){m_save_cnt->_abort(is_abort);}
     private:
       class _SaveCBK;
       class _SaveTask;
@@ -537,6 +541,7 @@ namespace lima {
       void _prepare(CtControl&);
       void _stop(CtControl&);
       void _close();
+      void _abort(bool);
       void _getCommonHeader(HeaderMap&);
       void _createStatistic(Data&);
       void _takeHeader(FrameHeaderMap::iterator&, HeaderMap& header,
