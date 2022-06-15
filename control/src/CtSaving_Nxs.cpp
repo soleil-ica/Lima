@@ -293,7 +293,6 @@ long SaveContainerNxs::_writeFile(void*,Data &aData,
 			//Finalize
 			DEB_TRACE() << "SaveContainerNxs::_writeFile() - Finalize() the writer";
 			_close(true);
-			m_writer = 0;
 			DEB_TRACE() << "Delete the DataStreamer : " << t.elapsed_msec() << " ms";
 		}
 		return aData.size(); // fix me
