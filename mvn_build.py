@@ -295,8 +295,8 @@ if __name__ == "__main__":
     camera_list             = ["simulator","lambda"]
     maven_platform_options  = " --file pom_64_el7.xml"
     maven_clean             = "mvn clean --file pom_64_el7.xml"
-    src_path                = './target/nar/lib/amd64-Linux-gcc/shared/'
-    device_src_path         = './target/nar/bin/amd64-Linux-gcc/'  
+    src_path                = './target/nar/lib/amd64-Linux-g++/shared/'
+    device_src_path         = './target/nar/bin/amd64-Linux-g++/'  
     print  
 
   print("=============================================")  
