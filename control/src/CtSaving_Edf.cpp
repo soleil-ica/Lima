@@ -186,6 +186,11 @@ void SaveContainerEdf::_close(void* f)
 #endif
 }
 
+void SaveContainerEdf::_close(bool forced_close)
+{
+	DEB_MEMBER_FUNCT();
+}
+
 long SaveContainerEdf::_writeFile(void* f,Data &aData,
 				  CtSaving::HeaderMap &aHeader,
 				  CtSaving::FileFormat aFormat)

@@ -619,7 +619,7 @@ void CtControl::abortAcq()
 
   stopAcq();
   PoolThreadMgr::get().abort();
-  
+  m_ct_saving->_abort(true);
   m_ct_saving->_resetReadyFlag();
 
   AutoMutex aLock(m_cond.mutex());
