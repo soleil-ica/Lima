@@ -21,8 +21,6 @@
 
         <YAT.version>1.18.5</YAT.version> 
         <NexusCPP.version>3.3.6</NexusCPP.version> 
-        <!--<YAT.version>1.18.0</YAT.version> 
-        <NexusCPP.version>3.3.7</NexusCPP.version> -->
 	</properties>
   
     <scm>

@@ -42,13 +42,13 @@
                 <dependency>
                     <groupId>fr.soleil.lib</groupId>
                     <artifactId>YAT-${aol}-shared-${mode}</artifactId>
-					<version>1.18.7</version>
+					<!-- <version>1.18.7</version> -->
                 </dependency>
                            
                 <dependency>
                     <groupId>fr.soleil.lib</groupId>
                     <artifactId>NexusCPP-${aol}-shared-${mode}</artifactId>
-					<version>3.4.0</version>
+					<!-- <version>3.4.0</version> -->
                 </dependency>
 
                 <dependency>
@@ -140,7 +140,7 @@
                 <dependency>
                     <groupId>fr.soleil.lib</groupId>
                     <artifactId>NexusCPP-${aol}-shared-${mode}</artifactId>
-					<version>${NexusCPP.version}</version> <!-- forced to work with shared -->
+					<version>${NexusCPP.version}</version> <!-- forced to work as shared -->
                 </dependency>
                         
                 <dependency>
@@ -151,7 +151,7 @@
                 <dependency>
                     <groupId>fr.soleil.lib</groupId>
                     <artifactId>YAT-${aol}-shared-${mode}</artifactId>
-					<version>${YAT.version}</version> <!-- forced to work with shared -->
+					<version>${YAT.version}</version> <!-- forced to work as shared -->
                 </dependency>                            
             </dependencies>
             <build>
