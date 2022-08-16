@@ -244,8 +244,9 @@ if __name__ == "__main__":
   parser.add_argument("-m","--multiproc", help="cameras will be compiled in multiprocessing way",action="store_true")
   parser.add_argument("-d","--directory", help="automatically install Lima binaries into the specified installation directory")
   parser.add_argument("-c","--copyonlydir", help="only install Lima binaries into the specified installation directory")
-  parser.add_argument("-e","--env", help="set the env option for the pom: eg: -e win_32_vc12 will set: -Denv=win_32_vc12 ;\
-                                          it is also used to force linux32 on 64 bits linux: use -e linux_32")
+  parser.add_argument("-e","--env", help="set the env option for the pom: available envs: -e win_32_vc12 will set: -Denv=win_32_vc12 ;\
+                                          it is also used to force linux32 on 64 bits linux: use -e linux_32\
+                                          and for compilation on CentOS7: use -e el7")
 
   args = parser.parse_args()
   
