@@ -116,7 +116,7 @@
        
         <profile>
             <properties> <!-- used for Win32 only -->
-                <YAT.version>1.18.6</YAT.version> 
+                <YAT.version>1.19.2</YAT.version> 
                 <NexusCPP.version>3.4.0</NexusCPP.version> 
             </properties>
     
