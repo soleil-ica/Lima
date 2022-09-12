@@ -76,17 +76,22 @@ void SaveContainerNxs::_close(void*)
 	DEB_MEMBER_FUNCT();
 }
 
+//--------------------------------------------------------------------------------------------------------------------
+//- Event rising by CtSaving when frame is saved (forced mode)
+//--------------------------------------------------------------------------------------------------------------------
 void SaveContainerNxs::_close(bool forced_close)
 {
 	DEB_MEMBER_FUNCT();
 	if(forced_close)
 	{
-		m_writer->Finalize();
-		delete m_writer;
-		m_writer = 0;
+		if(m_writer)
+		{
+			m_writer->Finalize();
+			delete m_writer;
+			m_writer = 0;
+		}
 	}
 }
-
 
 //--------------------------------------------------------------------------------------------------------------------
 //- Event rising by CtSaving when ???
@@ -155,9 +160,6 @@ long SaveContainerNxs::_writeFile(void*,Data &aData,
 			t.restart();
 			m_writer = new nxcpp::DataStreamer(m_pars.prefix, (std::size_t)m_pars.nbframes, (std::size_t)m_pars.framesPerFile);
 
-			DEB_TRACE() << "SaveContainerNxs::_writeFile() - initialize the writer";
-			m_writer->Initialize(m_pars.directory, "");
-
 			//decode options (split) ///////////////////////////////////////////////
 			//get acquisition parameters
             DEB_TRACE()<<"m_pars.options = "<<m_pars.options;
@@ -166,6 +168,23 @@ long SaveContainerNxs::_writeFile(void*,Data &aData,
 			m_options.clear();
 			while (getline(ss, field, '|'))
 				m_options.push_back(field);
+				
+			// configure the Writer mode 
+			//by default is ASYNCHRONOUS			
+			if(m_options.at(0) == "SYNCHRONOUS" )
+			{
+				DEB_TRACE() << "SaveContainerNxs::_writeFile() - Write Mode = SYNCHRONOUS";
+				m_writer->SetWriteMode(nxcpp::NexusFileWriter::SYNCHRONOUS);
+			}
+			else
+			{
+				DEB_TRACE() << "SaveContainerNxs::_writeFile() - Write Mode = ASYNCHRONOUS";
+				m_writer->SetWriteMode(nxcpp::NexusFileWriter::ASYNCHRONOUS);
+			}
+
+			DEB_TRACE() << "SaveContainerNxs::_writeFile() - initialize the writer";
+			m_writer->Initialize(m_pars.directory, "");
+
 			////////////////////////////////////////////////////////////////////////	
 
             // ensure that all options are here
@@ -186,24 +205,6 @@ long SaveContainerNxs::_writeFile(void*,Data &aData,
             //Add sensor 2D (image) // height,width
             DEB_TRACE() << "SaveContainerNxs::_writeFile() - Add sensor 2D (image)";
             m_writer->AddDataItem2D(m_pars.prefix+"_image", aData.dimensions[1], aData.dimensions[0]);
-
-            // configure the Writer mode 
-			//by default is IMMEDIATE			
-			if(m_options.at(0) == "SYNCHRONOUS" )
-			{
-				DEB_TRACE() << "SaveContainerNxs::_writeFile() - Write Mode = SYNCHRONOUS";
-				m_writer->SetWriteMode(nxcpp::NexusFileWriter::SYNCHRONOUS);
-			}
-			else if (m_options.at(0) == "DELAYED" )
-			{
-				DEB_TRACE() << "SaveContainerNxs::_writeFile() - Write Mode = DELAYED";
-				m_writer->SetWriteMode(nxcpp::NexusFileWriter::DELAYED);
-			}
-			else
-			{
-				DEB_TRACE() << "SaveContainerNxs::_writeFile() - Write Mode = IMMEDIATE";
-				m_writer->SetWriteMode(nxcpp::NexusFileWriter::IMMEDIATE);
-			}
 
             // configure the Memory mode 
 			//by default is COPY			
