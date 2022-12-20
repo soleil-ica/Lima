@@ -61,9 +61,6 @@
 [submodule "camera/dhyana"]
 	path = camera/dhyana
 	url = ssh://git@github.com/soleil-ica/Lima-camera-dhyana.git
-[submodule "camera/xspress3"]
-	path = camera/xspress3
-	url = ssh://git@github.com/soleil-ica/Lima-camera-xspress3.git
 [submodule "camera/slseiger"]
 	path = camera/slseiger
 	url = ssh://git@github.com/soleil-ica/Lima-camera-slseiger.git
