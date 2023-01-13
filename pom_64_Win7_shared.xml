@@ -9,7 +9,7 @@
 
     <groupId>fr.soleil.lib</groupId>
 	<artifactId>LimaCore-${aol}-shared-${mode}</artifactId>
-    <version>1.7.10</version>
+    <version>1.7.11</version>
 
     <packaging>nar</packaging>
     <name>LimaCore</name>
@@ -33,8 +33,8 @@
     </profiles>    
 	
 	<properties>
-        <YAT.version>1.18.7</YAT.version> 
-        <NexusCPP.version>3.4.0</NexusCPP.version> 
+        <YAT.version>1.19.3</YAT.version> 
+        <NexusCPP.version>3.4.1</NexusCPP.version> 
 		
         <libs-64bits>//filer2.ica.synchrotron-soleil.fr/ica/LIB_VC12_64</libs-64bits>
 
