@@ -33,7 +33,7 @@
     </profiles>    
 	
 	<properties>
-        <YAT.version>1.19.3</YAT.version> 
+        <YAT.version>1.19.5</YAT.version> 
         <NexusCPP.version>3.4.1</NexusCPP.version> 
 		
         <libs-64bits>//filer2.ica.synchrotron-soleil.fr/ica/LIB_VC12_64</libs-64bits>
@@ -59,7 +59,7 @@
         <dependency>
             <groupId>fr.soleil.lib</groupId>
 			<artifactId>LimaProcesslib-${aol}-shared-${mode}</artifactId>
-            <version>1.3.9</version>
+            <version>1.3.10</version>
         </dependency>
     </dependencies>
 
@@ -104,6 +104,7 @@
                         <defines>
                             <define>WITH_NXS_SAVING</define>
                             <define>WITH_YAT_STREAM</define>
+							<define>WITHOUT_GSL</define>
                         </defines>
                     </cpp>
 					
