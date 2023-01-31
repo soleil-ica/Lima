@@ -81,8 +81,6 @@ def clean_all():
         set_project_dir('camera/'+ cam);clean()
         if cam == "eiger":
             set_project_dir('camera/'+ cam +'/sdk/linux/EigerAPI');clean()
-        if cam == "ufxc":
-            set_project_dir('camera/'+ cam +'/UFXC-LIB/UFXCLib');clean()
     set_project_dir('applications/tango/cpp');clean()
 
 #------------------------------------------------------------------------------
@@ -124,18 +122,7 @@ def build_module(module, target_path):
     if "linux" in sys.platform:
       if target_path is not None:
         dest_path = os.path.join(target_path, '')
-        copy_file_ext(src_path, dest_path, '.so')	
-        
-  if module == "camera/ufxc":
-    # specific treatment for the UFXCLib library
-    print("Building first:    " + module +'/UFXC-LIB/UFXCLib' + "\n")
-    set_project_dir(module+'/UFXC-LIB/UFXCLib')	
-    build(pom_file_options = maven_platform_options)
-    # copy UFXCLib sdk
-    if "linux" in sys.platform:
-      if target_path is not None:
-        dest_path = os.path.join(target_path, '')
-        copy_file_ext(src_path, dest_path, '.so')	
+        copy_file_ext(src_path, dest_path, '.so')  
         
   # compil module
   set_project_dir(module)
