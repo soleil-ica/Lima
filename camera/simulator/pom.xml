@@ -9,7 +9,7 @@
 
     <groupId>fr.soleil.lib.Lima.Camera</groupId>
     <artifactId>LimaSimulator-${aol}-shared-${mode}</artifactId>
-    <version>1.4.1</version>
+    <version>1.4.2</version>
 
     <packaging>nar</packaging>
     <name>LimaSimulator</name>
@@ -36,7 +36,7 @@
                 <dependency>
                     <groupId>fr.soleil.lib</groupId>
                     <artifactId>LimaCore-${aol}-shared-${mode}</artifactId>
-                    <version>1.7.10</version>
+                    <version>1.7.11</version>
                 </dependency>
             </dependencies>
         </profile>
@@ -55,7 +55,7 @@
                 <dependency>
                     <groupId>fr.soleil.lib</groupId>
                     <artifactId>LimaCore-${aol}-shared-${mode}</artifactId>
-                    <version>1.7.10</version>
+                    <version>1.7.11</version>
                 </dependency>   
             </dependencies>
 

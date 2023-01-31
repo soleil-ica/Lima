@@ -9,7 +9,7 @@
 
     <groupId>fr.soleil.lib.Lima.Camera</groupId>
     <artifactId>LimaSimulator-amd64-Linux-gcc-shared-${mode}</artifactId>
-    <version>1.4.1</version>
+    <version>1.4.2</version>
 
     <packaging>nar</packaging>
     <name>LimaSimulator</name>
@@ -34,7 +34,7 @@
                 <dependency>
                     <groupId>fr.soleil.lib</groupId>
                     <artifactId>LimaCore-amd64-Linux-gcc-shared-${mode}</artifactId>
-                    <version>1.7.10</version>
+                    <version>1.7.11</version>
                 </dependency>                             
             </dependencies>
         </profile>
@@ -52,11 +52,7 @@
                             <includePath>include</includePath>
                         </includePaths>
                     </cpp>
-					<linker>
-					<libs>
-						
-					</libs>
-				   </linker>
+					
                     <libraries>
                         <library>
                             <type>shared</type>
