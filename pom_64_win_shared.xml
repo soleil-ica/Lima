@@ -8,7 +8,7 @@
     </parent>
 
     <groupId>fr.soleil.lib</groupId>
-	<artifactId>LimaCore-${aol}-shared-${mode}</artifactId>
+	<artifactId>LimaCore-amd64-Windows-msvc12-shared-${mode}</artifactId>
     <version>1.7.11</version>
 
     <packaging>nar</packaging>
@@ -58,7 +58,7 @@
         <!-- LimaProcesslib -->
         <dependency>
             <groupId>fr.soleil.lib</groupId>
-			<artifactId>LimaProcesslib-${aol}-shared-${mode}</artifactId>
+			<artifactId>LimaProcesslib-amd64-Windows-msvc12-shared-${mode}</artifactId>
             <version>1.3.10</version>
         </dependency>
     </dependencies>
