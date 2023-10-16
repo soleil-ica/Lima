@@ -73,3 +73,6 @@
 [submodule "camera/princeton"]
 	path = camera/princeton
 	url = ssh://git@github.com/soleil-ica/Lima-camera-princeton.git
+[submodule "camera/dhyana6060"]
+	path = camera/dhyana6060
+	url = git@github.com:soleil-ica/Lima-camera-dhyana6060.git
