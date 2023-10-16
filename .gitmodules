@@ -75,4 +75,4 @@
 	url = https://github.com/soleil-ica/Lima-camera-princeton.git
 [submodule "camera/dhyana6060"]
 	path = camera/dhyana6060
-	url = https://github.com:soleil-ica/Lima-camera-dhyana6060.git
+	url = https://github.com/soleil-ica/Lima-camera-dhyana6060.git
