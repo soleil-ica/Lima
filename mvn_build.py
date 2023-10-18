@@ -208,7 +208,7 @@ if __name__ == "__main__":
         device_src_path         = './target/nar/bin/x86-Windows-msvc/'
     else:
         platform                = "win64"
-        camera_list             = ["dhyana","hamamatsu", "pco","perkinelmer", "simulator", "spectrumone"]
+        camera_list             = ["dhyana","dhyana6060", "hamamatsu", "pco","perkinelmer", "simulator", "spectrumone"]
         maven_platform_options  = " --file pom_64_win_shared.xml"
         maven_clean             = "mvn clean  --file pom_64_win_shared.xml"
         src_path                = './target/nar/lib/amd64-Windows-msvc/shared/'
