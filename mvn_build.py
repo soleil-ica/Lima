@@ -186,7 +186,7 @@ if __name__ == "__main__":
   if "linux" in sys.platform:
     if "i686" in platform.machine():
         platform                = "linux32"
-        camera_list             = ["basler","imxpad","marccd","merlin", "pilatus","simulator", "xpad"]
+        camera_list             = ["imxpad","marccd","merlin", "pilatus","simulator", "xpad"]
         maven_platform_options  = " -Denv=linux_32"
         maven_clean             = "mvn clean"
         src_path                = './target/nar/lib/i386-Linux-g++/shared/'
@@ -272,7 +272,7 @@ if __name__ == "__main__":
   if args.env == 'linux_32':
     print(" Compilation " + args.env + " sur platform " + platform)
     platform                = "linux32"
-    camera_list             = ["basler", "imxpad", "marccd","merlin", "pilatus","simulator", "xpad"]
+    camera_list             = ["imxpad", "marccd","merlin", "pilatus","simulator", "xpad"]
     maven_platform_options  = " -Denv=linux_32"
     maven_clean             = "mvn clean"
     src_path                = './target/nar/lib/i386-Linux-g++/shared/'
@@ -280,7 +280,7 @@ if __name__ == "__main__":
 
   if args.env == 'el7':
     print(" Compilation " + args.env + " sur platform " + platform)
-    camera_list             = ["simulator","lambda"]
+    camera_list             = ["basler","lambda","simulator"]
     maven_platform_options  = " --file pom_64_el7.xml"
     maven_clean             = "mvn clean --file pom_64_el7.xml"
     src_path                = './target/nar/lib/amd64-Linux-g++/shared/'
