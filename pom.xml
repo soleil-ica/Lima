@@ -89,7 +89,7 @@
                                 
                                 <defines>
                                     <define>WITH_NXS_SAVING</define>
-                                    <define>WITH_HDF5_SAVING</define>
+                                    <!-- <define>WITH_HDF5_SAVING</define> -->
                                     <define>WITH_YAT_STREAM</define>  
 									<define>WITHOUT_GSL</define>
                                 </defines>
