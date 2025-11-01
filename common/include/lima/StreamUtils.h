@@ -31,7 +31,7 @@
 
 #include "lima/LimaCompatibility.h"
 #if WIN32 && _MSC_VER >= 1900
-template class LIMACORE_API std::allocator<char>;
+template class std::allocator<char>;
 #endif
 class LIMACORE_API NullStreamBuf : public std::stringbuf
 {

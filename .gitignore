@@ -29,3 +29,9 @@ cmake_install.cmake
 scripts/config.txt
 build/
 /.vscode/
+CMakeUserPresets.json
+# Ignore all files in folder test_package
+test_package/*
+# except conanfile.py
+!test_package/conanfile.py
+source_subfolder
