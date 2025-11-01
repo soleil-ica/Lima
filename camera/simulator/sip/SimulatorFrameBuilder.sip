@@ -176,7 +176,7 @@ class FrameBuilder
 	void getDiffractionSpeed( double &sx /Out/, double &sy /Out/ ) const;
 	void setDiffractionSpeed( const double &sx, const double &sy );
 
-//	void getNextFrame( unsigned char *ptr ) throw (Exception);
+//	void getNextFrame( unsigned char *ptr );
 	unsigned long getFrameNr();
 	void resetFrameNr( int frame_nr=0 );
 

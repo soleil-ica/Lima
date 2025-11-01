@@ -138,7 +138,7 @@ FrameBuilder::~FrameBuilder()
  * Finally checks if the RoI is consistent with the binned frame dim
  *******************************************************************/
 void FrameBuilder::checkValid( const FrameDim &frame_dim, const Bin &bin, 
-                               const Roi &roi ) throw(Exception)
+                               const Roi &roi )
 {
 	Size max_size;
 	getMaxImageSize( max_size );
@@ -638,7 +638,7 @@ void FrameBuilder::fillData( unsigned char *ptr )
  *
  * @exception lima::Exception  The image depth is not 1,2 or 4
  *******************************************************************/
-void FrameBuilder::getNextFrame( unsigned char *ptr ) throw (Exception)
+void FrameBuilder::getNextFrame( unsigned char *ptr )
 {
 	switch( m_frame_dim.getDepth() ) {
 		case 1 :

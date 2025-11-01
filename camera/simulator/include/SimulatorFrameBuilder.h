@@ -123,7 +123,7 @@ class LIBSIMULATOR_API FrameBuilder {
 	void getDiffractionSpeed( double &sx, double &sy ) const;
 	void setDiffractionSpeed( const double &sx, const double &sy );
 
-	void getNextFrame( unsigned char *ptr ) throw (Exception);
+	void getNextFrame( unsigned char *ptr );
 	unsigned long getFrameNr();
 	void resetFrameNr( int frame_nr=0 );
 
@@ -155,7 +155,7 @@ class LIBSIMULATOR_API FrameBuilder {
 		  const PeakList &peaks, double grow_factor );
 
 	void checkValid( const FrameDim &frame_dim, const Bin &bin, 
-	                 const Roi &roi ) throw(Exception);
+	                 const Roi &roi );
 	void checkPeaks( PeakList const &peaks );
 	double dataXY( const PeakList &peaks, int x, int y );
 	double dataDiffract( double x, double y );
