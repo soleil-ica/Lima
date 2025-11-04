@@ -1,6 +1,134 @@
 from conan import ConanFile
-from conan.errors import ConanInvalidConfiguration
 from conan.tools.cmake import CMakeToolchain, CMakeDeps
+
+
+# Windows 32 bits + MSVC14
+def rule_win32_msvc14(settings):
+    return [
+        "simulator",
+        "andor",
+        "perkinelmer",
+        "roperscientific",
+        "uview"
+    ]
+
+
+# Windows 64 bits + MSVC14
+def rule_win64_msvc14(settings):
+    return [
+        "simulator",
+        "dhyana",
+        "hamamatsu",
+        "perkinelmer",
+        "pco",
+        "spectrumone",
+        "rixs"
+    ]
+
+
+# Windows 64 bits + MSVC17
+def rule_win64_msvc17(settings):
+    return [
+        "simulator",
+        "rixs"
+    ]
+
+
+# CentOS 6 32 bits + GCC 4.4
+def rule_linux32_gcc44(settings):
+    return [
+        "simulator",
+        "imxpad",
+        "marccd",
+        "merlin",
+        "pilatus",
+        "xpad"
+    ]
+
+
+# CentOS 6 64 bits + GCC 4.4
+def rule_linux64_gcc44(settings):
+    return [
+        "simulator",
+        "eiger",
+        "imxpad",
+        "marccd",
+        "merlin",
+        "slseiger",
+        "slsjungfrau",
+        "spectralinstrument",
+        "ufxc"
+    ]
+
+
+# CentOS 7 64 bits + GCC 4.8
+def rule_linux64_gcc48(settings):
+    return [
+        "simulator",
+        "basler",
+        "lambda"
+    ]
+
+
+# CentOS 7 64 bits + GCC 11
+def rules_linux64_gcc11(settings):
+    return [
+        "simulator",
+        "rixs"
+    ]
+
+
+# Camera rules based on platform and compiler
+CAM_RULES = [
+    # Windows 32 bits + MSVC14
+    (lambda s: s.os == "Windows"
+        and s.arch == "x86"
+        and s.compiler == "msvc"
+        and str(s.compiler.version).startswith("190"),
+        rule_win32_msvc14),
+
+    # Windows 64 bits + MSVC14
+    (lambda s: s.os == "Windows"
+        and s.arch == "x86_64"
+        and s.compiler == "msvc"
+        and str(s.compiler.version).startswith("190"),
+        rule_win64_msvc14),
+
+    # Windows 64 bits + MSVC17
+    (lambda s: s.os == "Windows"
+        and s.arch == "x86_64"
+        and s.compiler == "msvc"
+        and str(s.compiler.version).startswith("193"),
+        rule_win64_msvc17),
+
+    # CentOS 6 32 bits + GCC 4.4
+    (lambda s: s.os == "Linux"
+        and s.arch == "x86"
+        and s.compiler == "gcc"
+        and str(s.compiler.version).startswith("4.4"),
+        rule_linux32_gcc44),
+
+    # CentOS 6 64 bits + GCC 4.4
+    (lambda s: s.os == "Linux"
+        and s.arch == "x86_64"
+        and s.compiler == "gcc"
+        and str(s.compiler.version).startswith("4.4"),
+        rule_linux64_gcc44),
+
+    # CentOS 7 64 bits + GCC 4.8
+    (lambda s: s.os == "Linux"
+        and s.arch == "x86_64"
+        and s.compiler == "gcc"
+        and str(s.compiler.version).startswith("4.8"),
+        rule_linux64_gcc48),
+
+    # CentOS 7 64 bits + GCC 11
+    (lambda s: s.os == "Linux"
+        and s.arch == "x86_64"
+        and s.compiler == "gcc"
+        and str(s.compiler.version).startswith("11"),
+        rules_linux64_gcc11),
+]
 
 
 class LimaConan(ConanFile):
@@ -32,133 +160,118 @@ class LimaConan(ConanFile):
         "VERSION"
 
     options = {
-        "with_andor": [True, False],
-        "with_basler": [True, False],
-        "with_dhyana": [True, False],
-        "with_eiger": [True, False],
-        "with_hamamatsu": [True, False],
-        "with_imxpad": [True, False],
-        "with_lambda": [True, False],
-        "with_marccd": [True, False],
-        "with_merlin": [True, False],
-        "with_pco": [True, False],
-        "with_perkinelmer": [True, False],
-        "with_pilatus": [True, False],
-        "with_roperscientific": [True, False],
-        "with_simulator": [True, False],
-        "with_slseiger": [True, False],
-        "with_slsjungfrau": [True, False],
-        "with_spectralinstrument": [True, False],
-        "with_spectrumone": [True, False],
-        "with_ufxc": [True, False],
-        "with_uview": [True, False],
-        "with_xpad": [True, False]
+        # Camera options
+        "with_andor": [True, False, "auto"],
+        "with_basler": [True, False, "auto"],
+        "with_dhyana": [True, False, "auto"],
+        "with_eiger": [True, False, "auto"],
+        "with_hamamatsu": [True, False, "auto"],
+        "with_imxpad": [True, False, "auto"],
+        "with_lambda": [True, False, "auto"],
+        "with_marccd": [True, False, "auto"],
+        "with_merlin": [True, False, "auto"],
+        "with_pco": [True, False, "auto"],
+        "with_perkinelmer": [True, False, "auto"],
+        "with_pilatus": [True, False, "auto"],
+        "with_roperscientific": [True, False, "auto"],
+        "with_simulator": [True, False, "auto"],
+        "with_slseiger": [True, False, "auto"],
+        "with_slsjungfrau": [True, False, "auto"],
+        "with_spectralinstrument": [True, False, "auto"],
+        "with_spectrumone": [True, False, "auto"],
+        "with_ufxc": [True, False, "auto"],
+        "with_uview": [True, False, "auto"],
+        "with_xpad": [True, False, "auto"],
+        # Other options
+        "with_rixs": [True, False, "auto"]
     }
 
     default_options = {
-        "with_andor": True,
-        "with_basler": True,
-        "with_dhyana": True,
-        "with_eiger": True,
-        "with_hamamatsu": True,
-        "with_imxpad": True,
-        "with_lambda": True,
-        "with_marccd": True,
-        "with_merlin": True,
-        "with_pco": True,
-        "with_perkinelmer": True,
-        "with_pilatus": True,
-        "with_roperscientific": True,
-        "with_simulator": True,
-        "with_slseiger": True,
-        "with_slsjungfrau": True,
-        "with_spectralinstrument": True,
-        "with_spectrumone": True,
-        "with_ufxc": True,
-        "with_uview": True,
-        "with_xpad": True
+        # Camera options
+        "with_andor": "auto",
+        "with_basler": "auto",
+        "with_dhyana": "auto",
+        "with_eiger": "auto",
+        "with_hamamatsu": "auto",
+        "with_imxpad": "auto",
+        "with_lambda": "auto",
+        "with_marccd": "auto",
+        "with_merlin": "auto",
+        "with_pco": "auto",
+        "with_perkinelmer": "auto",
+        "with_pilatus": "auto",
+        "with_roperscientific": "auto",
+        "with_simulator": "auto",
+        "with_slseiger": "auto",
+        "with_slsjungfrau": "auto",
+        "with_spectralinstrument": "auto",
+        "with_spectrumone": "auto",
+        "with_ufxc": "auto",
+        "with_uview": "auto",
+        "with_xpad": "auto",
+        # Other options
+        "with_rixs": "auto"
     }
+
+    def config_options(self):
+        # First collect active cameras based on rules
+        active = []
+        for cond, fn in CAM_RULES:
+            if cond(self.settings):
+                active = fn(self.settings)
+                break
+
+        # Set auto → True/False
+        for opt, val in self.options.items():
+            if val == "auto":
+                setattr(self.options, opt, opt.replace("with_", "") in active)
+
+        self.output.info("=== CAMERA OPTIONS AFTER RESOLUTION ===")
+        for opt, val in self.options.items():
+            self.output.info(f"{opt} = {val}")
 
     def requirements(self):
         self.requires("yat4tango/[>=1.0]@soleil/stable")
         self.requires("nexuscpp/[>=4]@soleil/stable")
-        if self.settings.os == "Windows":
-            if self.settings.arch == "x86":
-                # Windows 32 bits
-                if self.settings.compiler.version == "190":
-                    # Windows 32 bits with VS2015 (MSVC 14)
-                    self.requires("atmcd/2.83.3@soleil/stable")
-                    self.requires("xisl/4.0@soleil/stable")
-                    self.requires("pvcam/2.7.5@soleil/stable")
-                else:
-                    # Other Windows 32 bits compilers
-                    pass
-            elif self.settings.arch == "x86_64":
-                # Windows 64 bits
-                if self.settings.compiler.version == "190":
-                    # Windows 64 bits with VS2015 (MSVC 14)
-                    self.requires("opencv_world/[~3.0.0]@soleil/stable")
-                else:
-                    # Other Windows 64 bits compilers
-                    pass
-        elif self.settings.os == "Linux":
-            if self.settings.arch == "x86":
-                # Linux 32 bits
-                if (
-                    self.settings.compiler == "gcc"
-                    and self.settings.compiler.version == "4.4"
-                ):
-                    # CentOS 6 32 bits with GCC 4.4
-                    self.requires("tiff/4.0.3@soleil/stable")
-                    self.requires("xpix/2.1.7-soleil@soleil/stable")
-                else:
-                    # Other Linux 32 bits compilers
-                    pass
-            elif self.settings.arch == "x86_64":
-                # Linux 64 bits
-                if (
-                    self.settings.compiler == "gcc"
-                    and self.settings.compiler.version == "4.4"
-                ):
-                    # CentOS 6 64 bits with GCC 4.4
-                    self.requires("eigerapi/1.0.9@soleil/stable")
-                    self.requires("lz4/1.9.4")
-                    self.requires("ufxclib/[>=1.0]@soleil/stable")
-                elif (
-                    self.settings.compiler == "gcc"
-                    and self.settings.compiler.version == "4.8"
-                ):
-                    # CentOS 7 64 bits with GCC 4.8
-                    self.requires("pylon/6.3.0@soleil/stable")
-                    self.requires("xsp/2.1.0@soleil/stable")
-                else:
-                    # Other Linux 64 bits compilers
-                    pass
+        if self.options.get_safe("with_andor"):
+            self.requires("atmcd/2.83.3@soleil/stable")
+        if self.options.get_safe("with_basler"):
+            self.requires("pylon/6.3.0@soleil/stable")
+        if self.options.get_safe("with_eiger"):
+            self.requires("eigerapi/1.0.9@soleil/stable")
+            self.requires("lz4/1.9.4")
+        if self.options.get_safe("with_lambda"):
+            self.requires("xsp/2.1.0@soleil/stable")
+        if (self.options.get_safe("with_perkinelmer") and
+                self.settings.compiler.version == "190" and
+                self.settings.arch == "x86"):
+            self.requires("xisl/4.0@soleil/stable")
+        if self.options.get_safe("with_pilatus"):
+            self.requires("tiff/4.0.3@soleil/stable")
+        if self.options.get_safe("with_roperscientific"):
+            self.requires("pvcam/2.7.5@soleil/stable")
+        if self.options.get_safe("with_ufxc"):
+            self.requires("ufxclib/[>=1.0]@soleil/stable")
+        if self.options.get_safe("with_xpad"):
+            self.requires("xpix/2.1.7-soleil@soleil/stable")
+
+        if self.options.get_safe("with_rixs"):
+            if (self.settings.compiler == "msvc" and
+                    self.settings.compiler.version == "190" and
+                    self.settings.arch == "x86_64"):
+                # win64 msvc14
+                self.requires("opencv/[~3.0.0]@soleil/stable")
+            else:
+                self.requires("opencv/4.12.0@soleil/stable")
 
     def generate(self):
         deps = CMakeDeps(self)
         deps.generate()
+
         tc = CMakeToolchain(self)
-        tc.variables["WITH_ANDOR"] = self.options.with_andor
-        tc.variables["WITH_BASLER"] = self.options.with_basler
-        tc.variables["WITH_DHYANA"] = self.options.with_dhyana
-        tc.variables["WITH_EIGER"] = self.options.with_eiger
-        tc.variables["WITH_HAMAMATSU"] = self.options.with_hamamatsu
-        tc.variables["WITH_IMXPAD"] = self.options.with_imxpad
-        tc.variables["WITH_LAMBDA"] = self.options.with_lambda
-        tc.variables["WITH_MARCCD"] = self.options.with_marccd
-        tc.variables["WITH_MERLIN"] = self.options.with_merlin
-        tc.variables["WITH_PCO"] = self.options.with_pco
-        tc.variables["WITH_PERKINELMER"] = self.options.with_perkinelmer
-        tc.variables["WITH_PILATUS"] = self.options.with_pilatus
-        tc.variables["WITH_ROPERSCIENTIFIC"] = self.options.with_roperscientific
-        tc.variables["WITH_SIMULATOR"] = self.options.with_simulator
-        tc.variables["WITH_SLSEIGER"] = self.options.with_slseiger
-        tc.variables["WITH_SLSJUNGFRAU"] = self.options.with_slsjungfrau
-        tc.variables["WITH_SPECTRALINSTRUMENT"] = self.options.with_spectralinstrument
-        tc.variables["WITH_SPECTRUMONE"] = self.options.with_spectrumone
-        tc.variables["WITH_UFXC"] = self.options.with_ufxc
-        tc.variables["WITH_UVIEW"] = self.options.with_uview
-        tc.variables["WITH_XPAD"] = self.options.with_xpad
+        for opt, val in self.options.items():
+            cm_name = f"{opt.upper()}"
+            tc.variables[cm_name] = val
+
         self.set_cmake_variables(tc)
         tc.generate()

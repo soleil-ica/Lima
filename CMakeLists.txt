@@ -17,82 +17,46 @@ find_package(nexuscpp CONFIG REQUIRED)
 find_package(HDF5 CONFIG REQUIRED)
 
 # --------------------------------------------------------------------------
-# Camera options
+# Options
 # --------------------------------------------------------------------------
 
-set(AVAILABLE_CAMERAS "")
+option(WITH_RIXS "Enable RIXS support" OFF)
 
-if (WIN32)
-    if(NOT CMAKE_SIZEOF_VOID_P EQUAL 8)
-        if (MSVC AND MSVC_VERSION LESS_EQUAL 1900)
-            message(STATUS "Cameras for Windows 32 bits for MSVC 14 (Visual Studio 2015)")
-            list(APPEND AVAILABLE_CAMERAS
-                andor
-                perkinelmer
-                roperscientific
-                uview
-            )
-        else()
-            message(STATUS "Cameras for other compilers for Windows 32 bits")
-        endif()
-    else()
-        if (MSVC AND MSVC_VERSION LESS_EQUAL 1900)
-            message(STATUS "Cameras for Windows 64 bits for MSVC 14 (Visual Studio 2015)")
-            list(APPEND AVAILABLE_CAMERAS
-                dhyana
-                hamamatsu
-                perkinelmer
-                pco
-                spectrumone
-            )
-        else()
-            message(STATUS "Cameras for other compilers for Windows 64 bits")
-        endif()
-    endif()
-else()
-    if(NOT CMAKE_SIZEOF_VOID_P EQUAL 8)
-        message(STATUS "Cameras for Linux 32 bits")
-        if(CMAKE_CXX_COMPILER_VERSION STREQUAL "4.4.7")
-            message(STATUS "Cameras for CentOS 6 32 bits with GCC 4.4.7")
-            list(APPEND AVAILABLE_CAMERAS
-                imxpad
-                marccd
-                merlin
-                pilatus
-                xpad
-            )
-        else()
-            message(STATUS "Cameras for other compilers for Linux versions 32 bits")
-        endif()
-    else()
-        message(STATUS "Cameras for Linux 64 bits")
-        if(CMAKE_CXX_COMPILER_VERSION STREQUAL "4.4.7")
-            message(STATUS "Cameras for CentOS 6 64 bits with GCC 4.4.7")
-            list(APPEND AVAILABLE_CAMERAS
-                eiger
-                imxpad
-                marccd
-                merlin
-                slseiger
-                slsjungfrau
-                spectralinstrument
-                ufxc
-            )
-        elseif(CMAKE_CXX_COMPILER_VERSION STREQUAL "4.8.5")
-            message(STATUS "Cameras for CentOS 7 64 bits with GCC 4.8.5")
-            list(APPEND AVAILABLE_CAMERAS
-                basler
-                lambda
-            )
-        else()
-            message(STATUS "Cameras for other compilers for Linux versions 64 bits")
-        endif()    
-    endif()
-endif()
+set(ALL_CAMERAS
+    andor
+    basler
+    dhyana
+    eiger
+    hamamatsu
+    imxpad
+    lambda
+    marccd
+    merlin
+    pco
+    perkinelmer
+    pilatus
+    roperscientific
+    simulator
+    slseiger
+    slsjungfrau
+    spectralinstrument
+    spectrumone
+    ufxc
+    uview
+    xpad
+)
 
-foreach(cam ${AVAILABLE_CAMERAS})
+foreach(cam ${ALL_CAMERAS})
     string(TOUPPER ${cam} CAM_U)
-    option(WITH_${CAM_U} "Enable camera ${cam}" ON)
+    option(WITH_${CAM_U} "Enable camera ${cam}" OFF)
+endforeach()
+
+set(AVAILABLE_CAMERAS "")
+foreach(cam ${ALL_CAMERAS})
+    string(TOUPPER ${cam} CAM_U)
+    if(WITH_${CAM_U})
+        list(APPEND AVAILABLE_CAMERAS ${cam})
+    endif()
 endforeach()
 
 # --------------------------------------------------------------------------
@@ -189,13 +153,18 @@ install(
 # Submodules
 # --------------------------------------------------------------------------
 
-add_subdirectory(camera/simulator)
-
+set(HAS_ENABLED_CAMERA FALSE)
 foreach(cam ${AVAILABLE_CAMERAS})
     string(TOUPPER ${cam} CAM_U)
     if (WITH_${CAM_U})
+        set(HAS_ENABLED_CAMERA TRUE)    
         add_subdirectory(camera/${cam})
     endif()
 endforeach()
 
-add_subdirectory(applications/tango/cpp)
+if (HAS_ENABLED_CAMERA)
+    message(STATUS "At least one camera enabled → building Tango device")
+    add_subdirectory(applications/tango/cpp)
+else()
+    message(WARNING "No cameras enabled → Tango device will NOT be built")
+endif()

@@ -35,6 +35,7 @@ target_compile_definitions(limasimulator
     PUBLIC
         SIMULATOR_NAME=Simulator
         SIMULATOR_VERSION=${SIMULATOR_VERSION}
+        SIMULATOR_ENABLED
 )
 
 message(STATUS "Camera enabled: Simulator ${SIMULATOR_VERSION}")
