@@ -131,8 +131,8 @@ CAM_RULES = [
 ]
 
 
-class LimaConan(ConanFile):
-    name = "lima"
+class LimaDetectorConan(ConanFile):
+    name = "limadetector"
     executable = "ds_LimaDetector"
     version = "1.13.1"
     package_type = "application"
