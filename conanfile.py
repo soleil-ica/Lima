@@ -66,7 +66,8 @@ def rule_linux64_gcc48(settings):
     return [
         "simulator",
         "basler",
-        "lambda"
+        "lambda",
+        "rixs"
     ]
 
 
@@ -262,7 +263,7 @@ class LimaDetectorConan(ConanFile):
                 # win64 msvc14
                 self.requires("opencv/[~3.0.0]@soleil/stable")
             else:
-                self.requires("opencv/4.12.0@soleil/stable")
+                self.requires("opencv/3.4.20@soleil/stable")
 
     def generate(self):
         deps = CMakeDeps(self)
