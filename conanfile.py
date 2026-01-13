@@ -66,8 +66,9 @@ def rule_linux64_gcc48(settings):
     return [
         "simulator",
         "basler",
-        "lambda",
-        "rixs"
+        #"lambda",
+        "rixs",
+        "fitgaussian"
     ]
 
 
@@ -184,7 +185,8 @@ class LimaDetectorConan(ConanFile):
         "with_uview": [True, False, "auto"],
         "with_xpad": [True, False, "auto"],
         # Other options
-        "with_rixs": [True, False, "auto"]
+        "with_rixs": [True, False, "auto"],
+        "with_fitgaussian": [True, False, "auto"]
     }
 
     default_options = {
@@ -211,7 +213,8 @@ class LimaDetectorConan(ConanFile):
         "with_uview": "auto",
         "with_xpad": "auto",
         # Other options
-        "with_rixs": "auto"
+        "with_rixs": "auto",
+        "with_fitgaussian": "auto"
     }
 
     def config_options(self):
@@ -256,7 +259,7 @@ class LimaDetectorConan(ConanFile):
         if self.options.get_safe("with_xpad"):
             self.requires("xpix/2.1.7-soleil@soleil/stable")
 
-        if self.options.get_safe("with_rixs"):
+        if self.options.get_safe("with_rixs") or self.options.get_safe("with_fitgaussian"):
             if (self.settings.compiler == "msvc" and
                     self.settings.compiler.version == "190" and
                     self.settings.arch == "x86_64"):

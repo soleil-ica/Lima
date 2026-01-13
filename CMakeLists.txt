@@ -21,6 +21,7 @@ find_package(HDF5 CONFIG REQUIRED)
 # --------------------------------------------------------------------------
 
 option(WITH_RIXS "Enable RIXS support" OFF)
+option(WITH_FITGAUSSIAN "Enable FitGaussian support" OFF)
 
 set(ALL_CAMERAS
     andor
@@ -128,6 +129,8 @@ target_compile_definitions(limacore
         LIMACORE_VERSION=${LIMACORE_VERSION}
         WITH_NXS_SAVING
         WITH_YAT_STREAM
+        PUSH_EVENT_PROJ_ENABLED
+        PUSH_EVENT_MYPUSHTIME_ENABLED
 )
 
 # Windows DLL export
