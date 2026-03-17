@@ -130,7 +130,7 @@ target_compile_definitions(limacore
         WITH_NXS_SAVING
         WITH_YAT_STREAM
         PUSH_EVENT_PROJ_ENABLED
-        PUSH_EVENT_MYPUSHTIME_ENABLED
+        #PUSH_EVENT_MYPUSHTIME_ENABLED
 )
 
 # Windows DLL export
