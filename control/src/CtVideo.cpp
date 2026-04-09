@@ -896,6 +896,7 @@ void CtVideo::_data2image_finnished(Data&)
 
 void CtVideo::_apply_params(AutoMutex &aLock,bool aForceLiveFlag)
 {
+	DEB_MEMBER_FUNCT();
   if(m_ct.acquisition()->isMonitorMode())
     return;
 
@@ -905,64 +906,86 @@ void CtVideo::_apply_params(AutoMutex &aLock,bool aForceLiveFlag)
   if(aForceLiveFlag || m_pars.live)
     {
       if(m_has_video)
-	{
-	  if(m_pars_modify_mask & PARMODIFYMASK_MODE)
-	    {
-	      m_video->setVideoMode(m_pars.mode);
-	      CtImage* image = m_ct.image();
-	      // change on video mode can change the image depth,so ask ctimage
-	      // to resynchronize with the camera
-	      image->syncDim();
-	    }
-	  if(m_pars_modify_mask & PARMODIFYMASK_AUTO_GAIN)
-	    m_video->setHwAutoGainMode(m_pars.auto_gain_mode == OFF ? 
-				       HwVideoCtrlObj::OFF : HwVideoCtrlObj::ON);
-	  if(m_pars.auto_gain_mode == OFF && 
-	     (m_pars_modify_mask & PARMODIFYMASK_GAIN))
-	    m_video->setGain(m_pars.gain);
-	  if(m_pars_modify_mask & PARMODIFYMASK_BIN)
-	    {
-	      m_hw_bin = m_pars.bin;
-	      m_video->checkBin(m_hw_bin);
-	      m_video->setBin(m_hw_bin);
-	      // Synchronisation with standard acquisition
-	      CtImage* image = m_ct.image();
-	      image->setBin(m_hw_bin);
-	    }
-	  if(m_pars_modify_mask & PARMODIFYMASK_ROI)
-	    {
-	      m_video->checkRoi(m_pars.roi,m_hw_roi);
-	      m_video->setRoi(m_hw_roi);
-	      // Synchronisation with standard acquisition
-	      CtImage* image = m_ct.image();
-	      image->setRoi(m_hw_roi);
-	    }
-	  if(m_pars_modify_mask & PARMODIFYMASK_EXPOSURE)
-	    {
-	      m_sync->setExpTime(m_pars.exposure);
-	      CtAcquisition* acquisition = m_ct.acquisition();
-	      acquisition->setAcqExpoTime(m_pars.exposure);
-	    }
-	}
-      else			// Scientific Camera
-	{
+        {
+          if(m_pars_modify_mask & PARMODIFYMASK_MODE)
+            {
+              m_video->setVideoMode(m_pars.mode);
+              CtImage* image = m_ct.image();
+              // change on video mode can change the image depth,so ask ctimage
+              // to resynchronize with the camera
+              image->syncDim();
+            }
+          if(m_pars_modify_mask & PARMODIFYMASK_AUTO_GAIN)
+            m_video->setHwAutoGainMode(m_pars.auto_gain_mode == OFF ? 
+                                       HwVideoCtrlObj::OFF : HwVideoCtrlObj::ON);
+          if(m_pars.auto_gain_mode == OFF && 
+             (m_pars_modify_mask & PARMODIFYMASK_GAIN))
+            m_video->setGain(m_pars.gain);
+          if(m_pars_modify_mask & PARMODIFYMASK_BIN)
+            {
+              m_hw_bin = m_pars.bin;
+              m_video->checkBin(m_hw_bin);
+              m_video->setBin(m_hw_bin);
+              // Synchronisation with standard acquisition
+              CtImage* image = m_ct.image();
+              image->setBin(m_hw_bin);
+            }
+          if(m_pars_modify_mask & PARMODIFYMASK_ROI)
+            {
+              m_video->checkRoi(m_pars.roi,m_hw_roi);
+              m_video->setRoi(m_hw_roi);
+              // Synchronisation with standard acquisition
+              CtImage* image = m_ct.image();
+              image->setRoi(m_hw_roi);
+            }
           if(m_pars_modify_mask & PARMODIFYMASK_EXPOSURE)
             {
+              m_sync->setExpTime(m_pars.exposure);
               CtAcquisition* acquisition = m_ct.acquisition();
               acquisition->setAcqExpoTime(m_pars.exposure);
-	      if(m_pars.live)
-	        {
-		  aLock.unlock();
-		  m_ct.stopAcq();
-		  m_ct.prepareAcq();
-		  m_ct.startAcq();
-		  aLock.lock();
-		  m_pars.live = true;
-		}
             }
-	}
-      m_pars_modify_mask = 0;	// reset
-    }
+        }
+		else // Scientific Camera
+		{
+		  if (m_pars_modify_mask & PARMODIFYMASK_EXPOSURE)
+		  {
+			CtAcquisition* acquisition = m_ct.acquisition();
+
+			// set exposure in lima cach
+			acquisition->setAcqExpoTime(m_pars.exposure);
+
+			if (m_pars.live)
+			{
+			  try
+			  {
+				// try to set exposure directly through hardware
+				m_sync->setExpTime(m_pars.exposure);
+			  }
+			  catch (Exception&)
+			  {
+				// otherwise, stopAq/prepareAcq/startAcq
+				aLock.unlock();
+				m_ct.stopAcq();
+				
+				CtControl::Status ct_status;
+				do
+				{
+				  Sleep(0.01); 
+				  m_ct.getStatus(ct_status);
+				}
+				while (ct_status.AcquisitionStatus == AcqRunning);
+				
+				m_ct.prepareAcq();
+				m_ct.startAcq();
+				aLock.lock();
+				m_pars.live = true;
+			  }
+			}
+		  }
+		}
+
+    m_pars_modify_mask = 0; // reset
+  }
 }
 
 void CtVideo::_read_hw_params()
