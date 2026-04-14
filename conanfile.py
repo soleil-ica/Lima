@@ -136,7 +136,7 @@ CAM_RULES = [
 class LimaDetectorConan(ConanFile):
     name = "limadetector"
     executable = "ds_LimaDetector"
-    version = "1.13.2"
+    version = "1.14.0"
     package_type = "application"
     user = "soleil"
     python_requires = "base/[>=1.0]@soleil/stable"
