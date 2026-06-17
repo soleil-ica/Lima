@@ -2,8 +2,8 @@ from conan import ConanFile
 from conan.tools.cmake import CMakeToolchain, CMakeDeps
 
 
-# Windows 32 bits + MSVC14
-def rule_win32_msvc14(settings):
+# Windows 32 bits + MSVC17
+def rule_win32_msvc17(settings):
     return [
         "simulator",
         "andor",
@@ -13,8 +13,8 @@ def rule_win32_msvc14(settings):
     ]
 
 
-# Windows 64 bits + MSVC14
-def rule_win64_msvc14(settings):
+# Windows 64 bits + MSVC17
+def rule_win64_msvc17(settings):
     return [
         "simulator",
         "dhyana",
@@ -22,14 +22,6 @@ def rule_win64_msvc14(settings):
         "perkinelmer",
         "pco",
         "spectrumone",
-        "rixs"
-    ]
-
-
-# Windows 64 bits + MSVC17
-def rule_win64_msvc17(settings):
-    return [
-        "simulator",
         "rixs"
     ]
 
@@ -82,25 +74,20 @@ def rules_linux64_gcc11(settings):
 
 # Camera rules based on platform and compiler
 CAM_RULES = [
-    # Windows 32 bits + MSVC14
+    # Windows 32 bits + MSVC17
     (lambda s: s.os == "Windows"
         and s.arch == "x86"
         and s.compiler == "msvc"
-        and str(s.compiler.version).startswith("190"),
-        rule_win32_msvc14),
-
-    # Windows 64 bits + MSVC14
-    (lambda s: s.os == "Windows"
-        and s.arch == "x86_64"
-        and s.compiler == "msvc"
-        and str(s.compiler.version).startswith("190"),
-        rule_win64_msvc14),
+        and (str(s.compiler.version).startswith("193")
+             or str(s.compiler.version).startswith("194")),
+        rule_win32_msvc17),
 
     # Windows 64 bits + MSVC17
     (lambda s: s.os == "Windows"
         and s.arch == "x86_64"
         and s.compiler == "msvc"
-        and str(s.compiler.version).startswith("193"),
+        and (str(s.compiler.version).startswith("193")
+             or str(s.compiler.version).startswith("194")),
         rule_win64_msvc17),
 
     # CentOS 6 32 bits + GCC 4.4
@@ -247,7 +234,6 @@ class LimaDetectorConan(ConanFile):
         if self.options.get_safe("with_lambda"):
             self.requires("xsp/2.1.0@soleil/stable")
         if (self.options.get_safe("with_perkinelmer") and
-                self.settings.compiler.version == "190" and
                 self.settings.arch == "x86"):
             self.requires("xisl/4.0@soleil/stable")
         if self.options.get_safe("with_pilatus"):
