@@ -2,8 +2,8 @@ from conan import ConanFile
 from conan.tools.cmake import CMakeToolchain, CMakeDeps
 
 
-# Windows 32 bits + MSVC17
-def rule_win32_msvc17(settings):
+# Windows 32 bits + MSVC18
+def rule_win32_msvc18(settings):
     return [
         "simulator",
         "andor",
@@ -13,8 +13,8 @@ def rule_win32_msvc17(settings):
     ]
 
 
-# Windows 64 bits + MSVC17
-def rule_win64_msvc17(settings):
+# Windows 64 bits + MSVC18
+def rule_win64_msvc18(settings):
     return [
         "simulator",
         "dhyana",
@@ -74,21 +74,19 @@ def rules_linux64_gcc11(settings):
 
 # Camera rules based on platform and compiler
 CAM_RULES = [
-    # Windows 32 bits + MSVC17
+    # Windows 32 bits + MSVC18
     (lambda s: s.os == "Windows"
         and s.arch == "x86"
         and s.compiler == "msvc"
-        and (str(s.compiler.version).startswith("193")
-             or str(s.compiler.version).startswith("194")),
-        rule_win32_msvc17),
+        and str(s.compiler.version).startswith("195"),
+        rule_win32_msvc18),
 
-    # Windows 64 bits + MSVC17
+    # Windows 64 bits + MSVC18
     (lambda s: s.os == "Windows"
         and s.arch == "x86_64"
         and s.compiler == "msvc"
-        and (str(s.compiler.version).startswith("193")
-             or str(s.compiler.version).startswith("194")),
-        rule_win64_msvc17),
+        and str(s.compiler.version).startswith("195"),
+        rule_win64_msvc18),
 
     # CentOS 6 32 bits + GCC 4.4
     (lambda s: s.os == "Linux"
@@ -246,13 +244,7 @@ class LimaDetectorConan(ConanFile):
             self.requires("xpix/2.1.7-soleil@soleil/stable")
 
         if self.options.get_safe("with_rixs") or self.options.get_safe("with_fitgaussian"):
-            if (self.settings.compiler == "msvc" and
-                    self.settings.compiler.version == "190" and
-                    self.settings.arch == "x86_64"):
-                # win64 msvc14
-                self.requires("opencv/[~3.0.0]@soleil/stable")
-            else:
-                self.requires("opencv/3.4.20@soleil/stable")
+            self.requires("opencv/3.4.20@soleil/stable")
 
     def generate(self):
         deps = CMakeDeps(self)
