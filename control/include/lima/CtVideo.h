@@ -124,6 +124,8 @@ namespace lima
     void setBin(const Bin &aBin);
     void getBin(Bin &aBin) const;
 
+    void setAllowHwVideoExpTime(bool is_allowed);
+
     // --- images
     void getLastImage(Image &anImage) const;
     void getLastImageCounter(long long &anImageCounter) const;

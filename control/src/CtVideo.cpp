@@ -726,6 +726,11 @@ void CtVideo::getBin(Bin &aBin) const
   aBin = m_pars.bin;
 }
 
+void CtVideo::setAllowHwVideoExpTime(bool is_allowed)
+{
+  m_allow_hw_video_exp_time = is_allowed;
+}
+
 // --- images
 void CtVideo::getLastImage(CtVideo::Image &anImage) const
 {
@@ -956,30 +961,41 @@ void CtVideo::_apply_params(AutoMutex &aLock,bool aForceLiveFlag)
 
 			if (m_pars.live)
 			{
-			  try
-			  {
-				// try to set exposure directly through hardware
-				m_sync->setExpTime(m_pars.exposure);
-			  }
-			  catch (Exception&)
-			  {
-				// otherwise, stopAq/prepareAcq/startAcq
-				aLock.unlock();
-				m_ct.stopAcq();
-				
-				CtControl::Status ct_status;
-				do
-				{
-				  Sleep(0.01); 
-				  m_ct.getStatus(ct_status);
-				}
-				while (ct_status.AcquisitionStatus == AcqRunning);
-				
-				m_ct.prepareAcq();
-				m_ct.startAcq();
-				aLock.lock();
-				m_pars.live = true;
-			  }
+        bool hw_set_success = false;
+        if (m_allow_hw_video_exp_time)
+        {
+            try
+            {
+              // try to set exposure directly through hardware 
+              m_sync->setExpTime(m_pars.exposure);
+              hw_set_success = true; 
+            }
+            catch (Exception&)
+            {
+                // Hardware failure, leave hw_set_success as false to trigger fallback
+            }
+        }
+
+        // If the property is disabled or the hardware threw an exception
+        if (!hw_set_success)
+        {
+            // stopAq/prepareAcq/startAcq
+            aLock.unlock();
+            m_ct.stopAcq();
+            
+            CtControl::Status ct_status;
+            do
+            {
+                Sleep(0.01); 
+                m_ct.getStatus(ct_status);
+            }
+            while (ct_status.AcquisitionStatus == AcqRunning);
+            
+            m_ct.prepareAcq();
+            m_ct.startAcq();
+            aLock.lock();
+            m_pars.live = true;
+        }
 			}
 		  }
 		}
