@@ -235,7 +235,7 @@ class LimaDetectorConan(ConanFile):
                 self.settings.arch == "x86"):
             self.requires("xisl/4.0@soleil/stable")
         if self.options.get_safe("with_pilatus"):
-            self.requires("tiff/4.0.3@soleil/stable")
+            self.requires("libtiff/4.0.3@soleil/stable")
         if self.options.get_safe("with_roperscientific"):
             self.requires("pvcam/2.7.5@soleil/stable")
         if self.options.get_safe("with_ufxc"):
