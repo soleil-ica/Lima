@@ -124,6 +124,8 @@ namespace lima
     void setBin(const Bin &aBin);
     void getBin(Bin &aBin) const;
 
+    void setAllowHwVideoExpTime(bool is_allowed);
+
     // --- images
     void getLastImage(Image &anImage) const;
     void getLastImageCounter(long long &anImageCounter) const;
@@ -174,6 +176,7 @@ namespace lima
     Bin			m_hw_bin;
     bool		m_stopping_live; ///< variable to avoid deadlock when stopping live
     bool		m_active_flag; ///< flag if video is active
+    bool    m_allow_hw_video_exp_time;
   };
   
   inline const char* convert_2_string(CtVideo::AutoGainMode mode)
