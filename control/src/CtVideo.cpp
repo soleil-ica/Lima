@@ -956,7 +956,7 @@ void CtVideo::_apply_params(AutoMutex &aLock,bool aForceLiveFlag)
 		  {
 			CtAcquisition* acquisition = m_ct.acquisition();
 
-			// set exposure in lima cach
+			// set exposure in lima cache
 			acquisition->setAcqExpoTime(m_pars.exposure);
 
 			if (m_pars.live)
@@ -967,6 +967,10 @@ void CtVideo::_apply_params(AutoMutex &aLock,bool aForceLiveFlag)
             try
             {
               // try to set exposure directly through hardware 
+              CtAcquisition::Parameters acquisiton_params;
+              m_ct.acquisition()->getPars(acquisiton_params);
+
+              m_sync->setLatTime(acquisiton_params.latencyTime);
               m_sync->setExpTime(m_pars.exposure);
               hw_set_success = true; 
             }
