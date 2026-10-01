@@ -219,6 +219,7 @@ void lima::image2YUV(const unsigned char *srcPt,int width,int height,VideoMode m
       break;
     case YUV422PACKED:
       _yuv422packed_2_yuv(srcPt,dst,width,height);
+      break;
     case RGB555:
       _rgb555_2_yuv(srcPt,dst,width,height);
       break;
