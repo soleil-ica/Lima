@@ -28,11 +28,15 @@
  *******************************************************************/
 
 #include <ctime>
+#include <algorithm>
 #ifdef WIN32
 #define _USE_MATH_DEFINES
 #endif
 #include <cmath>
+#include <climits>
+#include <limits>
 #include <vector>
+#include <nexuscpp/nexuscpp.h>
 #ifdef __unix
 #include <sys/time.h>
 #else
@@ -45,6 +49,39 @@
 using namespace lima;
 using namespace lima::Simulator;
 using namespace std;
+
+namespace {
+bool findNexusDataSet(nxcpp::NexusFile &file, std::string &dataset_name,
+		     const std::string &group_class = "")
+{
+	std::vector<std::string> datasets, group_names, group_classes;
+	file.GetGroupChildren(&datasets, &group_names, &group_classes);
+	if (group_class == "NXdata") {
+		try {
+			file.GetAttribute("signal", &dataset_name);
+		} catch (nxcpp::NexusException &) {
+			dataset_name.clear();
+		}
+		if (!dataset_name.empty())
+			return true;
+		for (size_t index = 0; index < datasets.size(); ++index) {
+			bool is_signal = file.HasAttribute("signal", datasets[index].c_str(), "1");
+			file.CloseDataSet();
+			if (is_signal) {
+				dataset_name = datasets[index];
+				return true;
+			}
+		}
+	}
+	for (size_t index = 0; index < group_names.size(); ++index) {
+		file.OpenGroup(group_names[index].c_str(), group_classes[index].c_str());
+		if (findNexusDataSet(file, dataset_name, group_classes[index]))
+			return true;
+		file.CloseGroup();
+	}
+	return false;
+}
+}
 
 
 /***************************************************************//**
@@ -96,6 +133,7 @@ void FrameBuilder::init( FrameDim &frame_dim, Bin &bin, Roi &roi,
 			 const PeakList &peaks,
 			 double grow_factor )
 {
+	m_nexus_frames = 0;
 	checkValid(frame_dim, bin, roi);
 	setPeaks(peaks);
 
@@ -197,6 +235,8 @@ void FrameBuilder::getFrameDim( FrameDim &dim ) const
  *******************************************************************/
 void FrameBuilder::setFrameDim( const FrameDim &dim )
 {
+	if (m_nexus_frames && dim != m_frame_dim)
+		throw LIMA_HW_EXC(InvalidValue, "Frame dimensions must match the Nexus dataset");
 	checkValid(dim, m_bin, m_roi);
 
 	m_frame_dim = dim;
@@ -340,7 +380,68 @@ void FrameBuilder::getFillType( FillType &fill_type ) const
  *******************************************************************/
 void FrameBuilder::setFillType( FillType fill_type )
 {
+	if (fill_type == Nexus && m_nexus_frames == 0)
+		throw LIMA_HW_EXC(InvalidValue, "Configure a Nexus file before selecting Nexus mode");
 	m_fill_type = fill_type;
+}
+
+void FrameBuilder::getNexusFileName( std::string &file_name ) const
+{
+	file_name = m_nexus_file_name;
+}
+
+void FrameBuilder::setNexusFileName( const std::string &file_name )
+{
+	if (file_name.empty()) {
+		if (m_fill_type == Nexus)
+			throw LIMA_HW_EXC(InvalidValue, "Cannot clear the Nexus file in Nexus mode");
+		m_nexus_file_name.clear();
+		m_nexus_pixels.clear();
+		m_nexus_frames = 0;
+		return;
+	}
+	try {
+		nxcpp::NexusFile file;
+		file.OpenRead(file_name.c_str());
+		std::string dataset_name;
+		if (!findNexusDataSet(file, dataset_name))
+			throw LIMA_HW_EXC(InvalidValue, std::string("No NXdata signal found in Nexus file '") + file_name + "'");
+		nxcpp::NexusDataSetInfo info;
+		file.GetDataSetInfo(&info, dataset_name.c_str());
+		int rank = info.Rank();
+		if (rank != 2 && rank != 3)
+			throw LIMA_HW_EXC(InvalidValue, "Nexus signal must contain 2D images or a 3D image stack");
+		int frames = rank == 3 ? info.DimArray()[0] : 1;
+		int height = info.DimArray()[rank - 2];
+		int width = info.DimArray()[rank - 1];
+		nxcpp::NexusDataType type = info.DataType();
+		if ((type != nxcpp::NX_UINT8 && type != nxcpp::NX_UINT16 && type != nxcpp::NX_UINT32) ||
+		    frames <= 0 || height <= 0 || width <= 0 ||
+		    size_t(frames) > size_t(INT_MAX) / info.DatumSize() / height / width)
+			throw LIMA_HW_EXC(InvalidValue, "Invalid Nexus image dimensions or unsigned pixel type");
+		ImageType image_type = type == nxcpp::NX_UINT8 ? Bpp8 : type == nxcpp::NX_UINT16 ? Bpp16 : Bpp32;
+		FrameDim frame_dim(Size(width, height), image_type);
+		Bin valid_bin = m_bin;
+		checkBin(valid_bin);
+		if (valid_bin != m_bin)
+			throw LIMA_HW_EXC(InvalidValue, "Invalid bin for Nexus images");
+		if (m_roi.getSize() != 0)
+			(frame_dim / m_bin).checkValidRoi(m_roi);
+		nxcpp::NexusDataSet dataset;
+		file.GetData(&dataset, dataset_name.c_str());
+		std::vector<unsigned int> pixels(size_t(frames) * height * width);
+		nxcpp::NexusDataSet::Iterator<unsigned int> pixel(dataset);
+		for (size_t index = 0; index < pixels.size(); ++index, ++pixel)
+			pixels[index] = pixel.Value();
+		m_nexus_pixels.swap(pixels);
+		m_nexus_frames = static_cast<unsigned long>(frames);
+		m_frame_dim = frame_dim;
+		m_nexus_file_name = file_name;
+	} catch (nxcpp::NexusException &error) {
+		char message[1024] = {0};
+		error.GetMsg(message, sizeof(message));
+		throw LIMA_HW_EXC(InvalidValue, std::string("Cannot read Nexus file '") + file_name + "': " + message);
+	}
 }
 
 /***************************************************************//**
@@ -351,6 +452,32 @@ void FrameBuilder::setFillType( FillType fill_type )
 void FrameBuilder::getRotationAxis( RotationAxis &rot_axis ) const
 {
 	rot_axis = m_rot_axis;
+}
+
+template <class depth>
+void FrameBuilder::fillNexusData( unsigned char *ptr )
+{
+	int bin_x = m_bin.getX(), bin_y = m_bin.getY();
+	int width = m_frame_dim.getSize().getWidth();
+	int height = m_frame_dim.getSize().getHeight();
+	int bx0 = 0, by0 = 0, bx_end = width / bin_x, by_end = height / bin_y;
+	if (m_roi.getSize() != 0) {
+		bx0 = m_roi.getTopLeft().x;
+		by0 = m_roi.getTopLeft().y;
+		bx_end = m_roi.getBottomRight().x + 1;
+		by_end = m_roi.getBottomRight().y + 1;
+	}
+	const unsigned int *image = &m_nexus_pixels[(m_frame_nr % m_nexus_frames) * size_t(width) * height];
+	depth *output = reinterpret_cast<depth *>(ptr);
+	for (int by = by0; by < by_end; ++by) {
+		for (int bx = bx0; bx < bx_end; ++bx) {
+			unsigned long long value = 0;
+			for (int y = by * bin_y; y < (by + 1) * bin_y; ++y)
+				for (int x = bx * bin_x; x < (bx + 1) * bin_x; ++x)
+					value += image[size_t(y) * width + x];
+			*output++ = static_cast<depth>(std::min(value, static_cast<unsigned long long>(std::numeric_limits<depth>::max())));
+		}
+	}
 }
 
 /***************************************************************//**
@@ -640,15 +767,20 @@ void FrameBuilder::fillData( unsigned char *ptr )
  *******************************************************************/
 void FrameBuilder::getNextFrame( unsigned char *ptr )
 {
+	if (m_fill_type == Nexus && m_nexus_frames == 0)
+		throw LIMA_HW_EXC(InvalidValue, "No Nexus images configured");
 	switch( m_frame_dim.getDepth() ) {
 		case 1 :
-			fillData<unsigned char>(ptr);
+			if (m_fill_type == Nexus) fillNexusData<unsigned char>(ptr);
+			else fillData<unsigned char>(ptr);
 			break;
 		case 2 :
-			fillData<unsigned short>(ptr);
+			if (m_fill_type == Nexus) fillNexusData<unsigned short>(ptr);
+			else fillData<unsigned short>(ptr);
 			break;
 		case 4 :
-			fillData<unsigned int>(ptr);
+			if (m_fill_type == Nexus) fillNexusData<unsigned int>(ptr);
+			else fillData<unsigned int>(ptr);
 			break;
 		default:
 			throw LIMA_HW_EXC(NotSupported, "Invalid depth");
@@ -687,5 +819,7 @@ unsigned long FrameBuilder::getFrameNr()
 void FrameBuilder::getMaxImageSize(Size& max_size)
 {
 	int max_dim = 1024;
-	max_size = Size(max_dim, max_dim);
+	Size nexus_size = m_nexus_frames ? m_frame_dim.getSize() : Size(max_dim, max_dim);
+	max_size = Size(std::max(max_dim, nexus_size.getWidth()),
+	                std::max(max_dim, nexus_size.getHeight()));
 }

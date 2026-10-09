@@ -20,6 +20,8 @@ target_link_libraries(limasimulator
     PUBLIC
         limacore
         yat::yat
+    PRIVATE
+        nexuscpp::nexuscpp
 )
 
 limatools_set_library_soversion(limasimulator "VERSION")

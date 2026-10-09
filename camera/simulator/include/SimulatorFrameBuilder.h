@@ -30,6 +30,7 @@
 #ifndef FRAMEBUILDER_H
 #define FRAMEBUILDER_H
 
+#include <string>
 #include <vector>
 #include "SimulatorCompatibility.h"
 #include "lima/SizeUtils.h"
@@ -70,7 +71,7 @@ class LIBSIMULATOR_API FrameBuilder {
 
   public:
 	enum FillType { 
-		Gauss, Diffraction,
+		Gauss, Diffraction, Nexus,
 	};
 	enum RotationAxis {
 		Static, RotationX, RotationY,
@@ -102,6 +103,8 @@ class LIBSIMULATOR_API FrameBuilder {
 	
 	void getFillType( FillType &fill_type ) const;
 	void setFillType( FillType fill_type );
+	void getNexusFileName( std::string &file_name ) const;
+	void setNexusFileName( const std::string &file_name );
 
 	void getRotationAxis( RotationAxis &rot_axis ) const;
 	void setRotationAxis( RotationAxis rot_axis );
@@ -136,6 +139,9 @@ class LIBSIMULATOR_API FrameBuilder {
 	PeakList m_peaks;  /// Peaks to put in each frame
 	double m_grow_factor;                   /// Peaks grow % with each frame
 	FillType m_fill_type;
+	std::string m_nexus_file_name;
+	std::vector<unsigned int> m_nexus_pixels;
+	unsigned long m_nexus_frames;
 	RotationAxis m_rot_axis;
 	double m_rot_angle;
 	double m_rot_speed;
@@ -160,6 +166,7 @@ class LIBSIMULATOR_API FrameBuilder {
 	double dataXY( const PeakList &peaks, int x, int y );
 	double dataDiffract( double x, double y );
 	template <class depth> void fillData( unsigned char *ptr );
+	template <class depth> void fillNexusData( unsigned char *ptr );
 
 	PeakList getGaussPeaksFrom3d(double angle);
 	static double gauss2D( double x, double y, double x0, double y0, 
